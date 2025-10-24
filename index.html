@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarvadnya Caterers - A Culinary Experience</title>
+    
+    <!-- Favicon / Logo in Title -->
+    <link rel="icon" type="image/png" href="./logob.png">
+    
+    <!-- Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Great Vibes for titles, Poppins for body text --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom CSS for impressive UI/UX effects and animations */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            /* Dark Black Background */
+            background-color: #000000; 
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            padding-top: 70px; /* Space for the floating navbar */
+        }
+
+        /* --- PRELOADER STYLES START --- */
+        #preloader {
+            transition: opacity 0.7s ease-out, visibility 0.7s ease-out;
+        }
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-dots .dot {
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+        /* --- PRELOADER STYLES END --- */
+
+        .font-great-vibes {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* The 3D "Thali" (plate) effect container */
+        .thali-border {
+            padding: 8px; /* Space between image and border edge */
+            background: radial-gradient(circle, #e0e0e0, #a0a0a0, #606060);
+            box-shadow:
+                inset 0px 5px 15px rgba(0, 0, 0, 0.7),
+                inset 0px -2px 3px rgba(255, 255, 255, 0.3); /* Removed outer glow */
+        }
+
+        /* 3D Plate effect for hero section items */
+        .plate-effect {
+            background: radial-gradient(circle, #d4d4d4, #a3a3a3, #737373);
+            box-shadow:
+                inset 0px 3px 4px rgba(255, 255, 255, 0.5),
+                inset 0px -8px 15px rgba(0, 0, 0, 0.6); /* Removed outer glow */
+            padding: 6px; /* Increased padding for a thicker border */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .special-item:hover .plate-effect {
+            transform: translateY(-5px) scale(1.05) rotateZ(-2deg);
+            box-shadow:
+                inset 0px 3px 4px rgba(255, 255, 255, 0.5),
+                inset 0px -8px 15px rgba(0, 0, 0, 0.6); /* Removed outer glow */
+        }
+
+        /* Hide scrollbar utility */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Impressive Section Title Style */
+        .section-title {
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.5); /* Subtle Gold Glow */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem; /* 12px */
+        }
+        .section-title::before,
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 60px;
+            flex-shrink: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='80' viewBox='0 0 40 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='rangoliGold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FBBF24'/%3E%3Cstop offset='100%25' stop-color='%23D97706'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M20 78 C 10 60, 10 20, 20 2' stroke='url(%23rangoliGold)' stroke-width='2' fill='none'/%3E%3Cpath d='M20 40 C 35 35, 35 25, 28 15' stroke='url(%23rangoliGold)' stroke-width='1.5' fill='none'/%3E%3Cpath d='M20 40 C 35 45, 35 55, 28 65' stroke='url(%23rangoliGold)' stroke-width='1.5' fill='none'/%3E%3Ccircle cx='20' cy='40' r='2.5' fill='%23ef4444'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .section-title::after {
+            transform: scaleX(-1);
+        }
+
+        /* Scroll-triggered Animation */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* --- Search Feature Styles --- */
+        @keyframes rotate-clockwise {
+            from { transform: scale(0.5) rotate(0deg); }
+            to { transform: scale(1) rotate(360deg); }
+        }
+
+        @keyframes steam-rise {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.7; }
+            100% { transform: translateY(-90px) scale(2.2); opacity: 0; }
+        }
+
+        .dish-spotlight {
+            animation: rotate-clockwise 2.5s ease-out;
+        }
+        
+        .dish-spotlight .plate-effect {
+            position: relative;
+            box-shadow: 0 0 60px 20px rgba(251, 191, 36, 0.2); /* Premium Gold Glow */
+        }
+        
+        .dish-spotlight .steam {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            filter: blur(4px);
+            opacity: 0;
+            animation: steam-rise 4s infinite ease-out;
+        }
+        
+        /* --- NEW REVIEW CARD STYLES START --- */
+        .testimonial-card {
+            background: radial-gradient(circle, #2a2a2a, #1a1a1a);
+            border: 12px solid;
+            border-image-source: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='elegantGold' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FBBF24;' /%3E%3Cstop offset='100%25' style='stop-color:%23D97706;' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='2' y='2' width='96' height='96' rx='10' fill='none' stroke='url(%23elegantGold)' stroke-width='1'/%3E%3Cpath d='M 15 2 C 10 2 5 7 5 12' fill='none' stroke='url(%23elegantGold)' stroke-width='1.5'/%3E%3Cpath d='M 2 15 C 2 10 7 5 12 5' fill='none' stroke='url(%23elegantGold)' stroke-width='1.5'/%3E%3Cpath d='M 85 2 C 90 2 95 7 95 12' fill='none' stroke='url(%23elegantGold)' stroke-width='1.5'/%3E%3Cpath d='M 98 15 C 98 10 93 5 88 5' fill='none' stroke='url(%23elegantGold)' stroke-width='1.5'/%3E%3Cpath d='M 15 98 C 10 98 5 93 5 88' fill='none' stroke='url(%23elegantGold)' stroke-width='1.5'/%3E%3Cpath d='M 2 85 C 2 90 7 95 12 95' fill='none' stroke='url(%23elegantGold)' stroke-width='1.5'/%3E%3Cpath d='M 85 98 C 90 98 95 93 95 88' fill='none' stroke='url(%23elegantGold)' stroke-width='1.5'/%3E%3Cpath d='M 98 85 C 98 90 93 95 88 95' fill='none' stroke='url(%23elegantGold)' stroke-width='1.5'/%3E%3Ccircle cx='50' cy='6' r='2.5' fill='%23ef4444' stroke='%23FBBF24' stroke-width='0.5' /%3E%3Ccircle cx='50' cy='94' r='2.5' fill='%23ef4444' stroke='%23FBBF24' stroke-width='0.5' /%%3E%3Ccircle cx='6' cy='50' r='2.5' fill='%23ef4444' stroke='%23FBBF24' stroke-width='0.5' /%3E%3Ccircle cx='94' cy='50' r='2.5' fill='%23ef4444' stroke='%23FBBF24' stroke-width='0.5' /%3E%3C/svg%3E");
+            border-image-slice: 12;
+            border-image-repeat: round;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.7);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            gap: 0.75rem;
+            flex-direction: column;
+            text-align: center;
+        }
+        
+        .testimonial-card::before {
+            content: none; 
+        }
+
+        .avatar-container {
+            flex-shrink: 0;
+            width: 64px; 
+            height: 64px;
+            border-radius: 50%;
+            background-color: rgba(0,0,0,0.3);
+            border: 2px solid rgba(251, 191, 36, 0.2);
+            outline: 2px solid rgba(251, 191, 36, 0.5);
+            outline-offset: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .star-rating {
+            justify-content: center;
+        }
+
+        .star-rating .star-3d {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s ease;
+        }
+        .star-rating .star-3d:hover {
+            transform: scale(1.2);
+        }
+
+        .quote-text {
+            font-family: 'Great Vibes', cursive;
+            font-size: 1rem;
+            line-height: 1.4;
+            color: #e5e7eb;
+        }
+
+        .author-name {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            color: #ef4444; /* red-500 */
+            font-size: 0.8rem;
+        }
+
+        .author-designation {
+            color: #fbbd23; /* gold/yellow */
+            font-size: 0.7rem;
+        }
+
+        /* --- REVIEW CARD STYLES END --- */
+        
+        /* --- DISH CATEGORY ENHANCEMENTS --- */
+        #dish-categories {
+            -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+            mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
+            padding-bottom: 1rem; /* Add padding for the glow effect */
+        }
+        .dish-category-tab {
+            transition: all 0.3s ease-in-out;
+            border: 2px solid rgba(251, 191, 36, 0.2);
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            border-radius: 0.75rem; /* 12px */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.05);
+            color: #fff;
+        }
+        .dish-category-tab:hover:not(.active) {
+            transform: translateY(-4px);
+            background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
+            border-color: rgba(251, 191, 36, 0.5);
+        }
+        .dish-category-tab.active {
+            color: #ffffff;
+            border-color: #FBBF24; /* amber-400 */
+            transform: translateY(-4px) scale(1.05);
+            background: linear-gradient(to top, #ef4444, #d97706); /* Red-gold gradient */
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.5), 0 5px 15px rgba(0,0,0,0.6);
+        }
+        
+        /* --- DISH ITEM ANIMATION --- */
+        .dish-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+        }
+
+        /* --- MODAL STYLES --- */
+        #modal-backdrop {
+            transition: opacity 0.3s ease-in-out;
+        }
+        #modal-panel {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8); /* Darker, non-glowing shadow */
+        }
+
+        /* --- FLOATING ACTION BUTTON --- */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+        #fab {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: pulse 2.5s infinite;
+        }
+        #fab:hover {
+            animation-play-state: paused; /* Pause the pulse on hover */
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white/90">
+    
+    <!-- SVG Definitions for reuse (e.g., gold star) --><svg width="0" height="0" class="absolute">
+        <defs>
+            <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#FFDF00;" />
+                <stop offset="50%" style="stop-color:#D4AF37;" />
+                <stop offset="100%" style="stop-color:#B8860B;" />
+            </linearGradient>
+            <symbol id="star-3d-symbol" viewBox="0 0 51 48">
+                <path fill="url(#gold-gradient)" stroke="#654321" stroke-width="1.5" d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
+                <path fill="rgba(255,255,255,0.4)" d="m25,1 6,17h2l-13,9-5-17z" />
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- Preloader --><div id="preloader" class="fixed inset-0 bg-gradient-to-br from-red-500 to-red-700 z-[100] flex flex-col items-center justify-center">
+        <div class="text-center">
+            <img src="./logor.png" alt="Sarvadnya Logo" class="w-28 h-28 mx-auto rounded-full mb-4 shadow-lg shadow-black/30">
+            <h1 class="font-great-vibes text-5xl text-white" style="text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);">Sarvadnya Caterers</h1>
+            <p class="text-white/80 text-sm mt-2 tracking-wider" data-translate-key="preloader_subtitle">Crafting Unforgettable Experiences</p>
+            <div class="loader-dots mt-8 flex justify-center">
+                <span class="dot mx-1.5 w-2.5 h-2.5 bg-white rounded-full"></span>
+                <span class="dot mx-1.5 w-2.5 h-2.5 bg-white rounded-full" style="animation-delay: 0.2s;"></span>
+                <span class="dot mx-1.5 w-2.5 h-2.5 bg-white rounded-full" style="animation-delay: 0.4s;"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Navigation Bar --><nav class="fixed top-0 left-0 w-full bg-black/50 backdrop-blur-lg shadow-lg shadow-black/50 z-50 flex items-center justify-between px-4 py-3 gap-2">
+        <img src="./logob.png" alt="Sarvadnya Logo" class="h-9 w-9 rounded-full flex-shrink-0">
+        <div class="relative flex-grow mx-2">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-white/40" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </span>
+            <input type="text" id="search-input" placeholder="Search..." class="w-full bg-gray-800/50 text-white/80 placeholder-white/40 text-sm rounded-full py-2 pl-9 pr-3 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all">
+        </div>
+        <div class="relative flex-shrink-0">
+            <button id="lang-toggle" class="flex items-center gap-1.5 text-white/80 hover:text-white transition-colors p-2 rounded-full hover:bg-white/10">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20z"/><path d="M2 12h20"/></svg>
+                <span id="current-lang" class="text-xs font-bold">EN</span>
+            </button>
+            <div id="lang-dropdown" class="absolute top-full right-0 mt-2 w-32 bg-gray-900/80 backdrop-blur-lg rounded-lg shadow-xl p-2 hidden opacity-0 transform scale-95 transition-all">
+                <a href="#" class="lang-option block w-full text-left px-3 py-2 text-sm text-white/80 hover:bg-red-500/50 hover:text-white rounded" data-lang="en">English</a>
+                <a href="#" class="lang-option block w-full text-left px-3 py-2 text-sm text-white/80 hover:bg-red-500/50 hover:text-white rounded" data-lang="hi">हिन्दी</a>
+                <a href="#" class="lang-option block w-full text-left px-3 py-2 text-sm text-white/80 hover:bg-red-500/50 hover:text-white rounded" data-lang="mr">मराठी</a>
+            </div>
+        </div>
+        <div class="relative flex-shrink-0">
+            <button id="menu-toggle" class="p-2 rounded-full text-white/80 hover:text-white hover:bg-white/10 transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-[60px] left-0 w-full bg-black/70 backdrop-blur-lg z-40 p-4 hidden opacity-0 transition-all duration-300">
+        <nav class="flex flex-col gap-2">
+            <a href="#specials-section" class="nav-link text-white/80 hover:text-white hover:bg-white/10 text-center font-semibold py-3 rounded-lg" data-translate-key="todays_specials">Today's Specials</a>
+            <a href="#occasions-section" class="nav-link text-white/80 hover:text-white hover:bg-white/10 text-center font-semibold py-3 rounded-lg" data-translate-key="occasion_special">Occasions</a>
+            <a href="#recommendations-section" class="nav-link text-white/80 hover:text-white hover:bg-white/10 text-center font-semibold py-3 rounded-lg" data-translate-key="chefs_recommendations">Recommendations</a>
+            <a href="#dishes-section" class="nav-link text-white/80 hover:text-white hover:bg-white/10 text-center font-semibold py-3 rounded-lg" data-translate-key="our_dishes">Our Dishes</a>
+            <a href="#reviews-section" class="nav-link text-white/80 hover:text-white hover:bg-white/10 text-center font-semibold py-3 rounded-lg" data-translate-key="review_title">Reviews</a>
+        </nav>
+    </div>
+
+    <!-- Main Content Container --><main class="w-full mx-auto px-4">
+        <!-- All sections are wrapped here --><div class="space-y-12">
+
+        <!-- Video Section -->
+        <div class="animate-on-scroll rounded-2xl overflow-hidden shadow-lg">
+            <video class="w-full aspect-video object-cover" autoplay loop muted playsinline>
+                <source src="./Cinematic_Chef_Introduces_Sarvadnya_Caterers.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <!-- Today's Specials Section --><section id="specials-section" class="animate-on-scroll relative pt-16" style="--delay: 150ms;">
+            <h2 class="text-white text-4xl md:text-5xl font-great-vibes text-center section-title" data-translate-key="todays_specials">Today's Specials</h2>
+             <div id="specials-scroll-container" class="flex gap-4 overflow-x-auto pb-10 -mx-4 px-4 no-scrollbar pt-4 relative">
+                <!-- Items are dynamically added here --></div>
+            <p class="no-results hidden text-white/50 text-center w-full mt-4">No specials found.</p>
+        </section>
+
+        <!-- Occasion Special Section --><section id="occasions-section" class="animate-on-scroll relative" style="--delay: 150ms;">
+            <h2 class="text-white text-4xl md:text-5xl font-great-vibes text-center section-title absolute w-full top-4 left-0 z-10" data-translate-key="occasion_special">Occasion Special</h2>
+            <div class="flex gap-8 overflow-x-auto pb-10 pt-40 -mx-4 px-4 no-scrollbar relative z-20">
+                <!-- Occasion Cards are dynamically added from JS --></div>
+            <p class="no-results hidden text-white/50 text-center w-full mt-4">No occasions found.</p>
+        </section>
+
+        <!-- Chef's Recommendations Section --><section id="recommendations-section" class="animate-on-scroll relative pt-16" style="--delay: 300ms;">
+            <h2 class="text-white text-4xl md:text-5xl font-great-vibes text-center section-title absolute w-full top-0 left-0 z-10" data-translate-key="chefs_recommendations">Chef's Recommendations</h2>
+            <div class="flex gap-4 overflow-x-auto pb-10 -mx-4 px-4 no-scrollbar pt-24 relative z-20">
+                <!-- Recommendation items are added from JS --></div>
+             <p class="no-results hidden text-white/50 text-center w-full mt-4">No recommendations found.</p>
+        </section>
+
+        <!-- Our Dishes Section --><section id="dishes-section" class="animate-on-scroll relative pt-16" style="--delay: 450ms;">
+            <h2 class="text-white text-4xl md:text-5xl font-great-vibes text-center section-title" data-translate-key="our_dishes">Our Dishes</h2>
+            <div class="pt-12 relative z-20">
+                <div id="dish-categories" class="flex gap-4 justify-center overflow-x-auto no-scrollbar mb-8 -mx-4 px-4">
+                    <!-- Category tabs are added from JS -->
+                </div>
+                <div id="dish-items-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    <!-- Dish items for the selected category are added from JS -->
+                </div>
+            </div>
+             <p class="no-results hidden text-white/50 text-center w-full mt-4">No dishes found.</p>
+        </section>
+
+        <!-- Customer Reviews Section --><section id="reviews-section" class="animate-on-scroll relative pt-16" style="--delay: 600ms;">
+            <h2 class="text-white text-4xl md:text-5xl font-great-vibes text-center section-title absolute w-full top-4 left-0 z-10" data-translate-key="review_title">What Our Clients Say</h2>
+            <div class="space-y-8 pt-24 relative z-20">
+                <div id="reviews-row-1" class="flex gap-8 overflow-x-auto pb-10 -mx-4 px-4 no-scrollbar">
+                    <!-- Review cards are added from JS --></div>
+                <div id="reviews-row-2" class="flex gap-8 overflow-x-auto pb-10 -mx-4 px-4 no-scrollbar">
+                    <!-- Review cards are added from JS --></div>
+            </div>
+        </section>
+
+        </div>
+    </main>
+    
+    <!-- Search Result Spotlight -->
+    <div id="search-spotlight" class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-4 hidden transition-opacity duration-500">
+        <!-- content will be injected by JS -->
+    </div>
+
+
+    <!-- Footer --><footer class="w-full mx-auto py-10 px-4 text-center text-white/40 mt-12 animate-on-scroll" style="--delay: 750ms;">
+        <div class="flex justify-center items-center space-x-6 mb-4">
+            <a href="#" class="hover:text-red-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+            <a href="#" class="hover:text-red-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+            <a href="https://wa.me/917775034821" target="_blank" class="hover:text-red-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></a>
+            <a href="tel:+917775034821" class="hover:text-red-500 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></a>
+        </div>
+        <p class="text-xs">© 2025 Sarvadnya Caterers. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Details Modal --><div id="modal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
+        <!-- Backdrop --><div id="modal-backdrop" class="absolute inset-0 bg-black/70 backdrop-blur-sm opacity-0"></div>
+        <!-- Panel --><div id="modal-panel" class="relative w-full max-w-lg bg-gray-900 rounded-3xl shadow-2xl shadow-black/30 border border-white/10 opacity-0 transform scale-95">
+            <button id="modal-close" class="absolute top-3 right-3 text-white/50 hover:text-white hover:bg-white/10 p-2 rounded-full transition-colors z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div id="modal-content" class="p-6 md:p-8 max-h-[80vh] overflow-y-auto no-scrollbar">
+                <!-- Modal content is injected here by JS --></div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button: Book Now --><a id="fab" href="https://wa.me/917775034821?text=Hello%20Sarvadnya%20Caterers,%20I'd%20like%20to%20inquire%20about%20your%20services." target="_blank" class="fixed bottom-5 right-5 z-50 bg-green-500 rounded-full p-3 shadow-lg flex items-center gap-2 text-white font-bold">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        <span data-translate-key="book_now">Book Now</span>
+    </a>
+
+    <script>
+        // Data for dynamic content generation
+        const contentData = {
+            specials: [
+                { id: 'shrikhand', nameKey: 'shrikhand', img: 'Shrikhand' },
+                { id: 'basundi', nameKey: 'basundi', img: 'Basundi' },
+                { id: 'paneer_butter', nameKey: 'paneer_butter_masala', img: 'Paneer+Butter+Masala' },
+                { id: 'matar_paneer', nameKey: 'matar_paneer', img: 'Matar+Paneer' },
+                { id: 'kaju_curry', nameKey: 'kaju_curry', img: 'Kaju+Curry' },
+            ],
+            occasions: [
+                { id: 'wedding', nameKey: 'wedding_name', img: 'Wedding+Feast' },
+                { id: 'ceremony', nameKey: 'ceremony_name', img: 'Ring+Ceremony' },
+                { id: 'birthday', nameKey: 'birthday_name', img: 'Birthday+Party' },
+                { id: 'gettogether', nameKey: 'gettogether_name', img: 'Family+Party' },
+                { id: 'haldi', nameKey: 'haldi_name', img: 'Haldi+Function' },
+                { id: 'reception', nameKey: 'reception_name', img: 'Grand+Reception' },
+            ],
+            recommendations: [
+                { id: 'mix_veg', nameKey: 'mix_veg', img: 'Mix+Veg' },
+                { id: 'aalu_matar', nameKey: 'aalu_matar', img: 'Aalu+Matar' },
+                { id: 'samosa', nameKey: 'samosa', img: 'Samosa' },
+                { id: 'veg_pulao', nameKey: 'veg_pulao', img: 'Veg+Pulao' },
+                { id: 'dosa', nameKey: 'masala_dosa', img: 'Masala+Dosa' },
+            ],
+            dishCategories: [
+                { id: 'breads', nameKey: 'cat_breads', icon: '🫓', dishes: [
+                    { nameKey: 'd_gahu_poli', img: 'Poli' }, { nameKey: 'd_jwari_bhakri', img: 'Bhakri' }, { nameKey: 'd_bajri_bhakri', img: 'Bhakri' }
+                ]},
+                { id: 'rice', nameKey: 'cat_rice', icon: '🍚', dishes: [
+                    { nameKey: 'd_plain_rice', img: 'Rice' }, { nameKey: 'd_varan_bhat', img: 'Varan+Bhat' }, { nameKey: 'd_jeera_rice', img: 'Jeera+Rice' }, { nameKey: 'd_masala_bhat', img: 'Masala+Bhat' }, { nameKey: 'd_dal_khichdi', img: 'Khichdi' }
+                ]},
+                { id: 'curries', nameKey: 'cat_curries', icon: '🥬', dishes: [
+                    { nameKey: 'd_batata_bhaji', img: 'Aloo+Sabzi' }, { nameKey: 'd_cabbage_matar', img: 'Cabbage+Fry' }, { nameKey: 'mix_veg', img: 'Mix+Veg' }, { nameKey: 'aalu_matar', img: 'Aloo+Matar' }, { nameKey: 'd_vangi_batata', img: 'Baingan+Aloo' }, { nameKey: 'paneer_butter_masala', img: 'Paneer+Butter' }, { nameKey: 'kaju_curry', img: 'Kaju+Curry' }, { nameKey: 'd_chana_masala', img: 'Chole' }, { nameKey: 'matar_paneer', img: 'Matar+Paneer' }
+                ]},
+                { id: 'fry_side', nameKey: 'cat_fry_side', icon: '🧆', dishes: [
+                    { nameKey: 'd_papad', img: 'Papad' }, { nameKey: 'd_masala_papad', img: 'Masala+Papad' }, { nameKey: 'd_bhaji', img: 'Bhaji' }, { nameKey: 'd_sev_bhaji', img: 'Sev+Bhaji' }, { nameKey: 'd_khari_boondi', img: 'Boondi' }
+                ]},
+                { id: 'snacks', nameKey: 'cat_snacks', icon: '🍠', dishes: [
+                    { nameKey: 'samosa', img: 'Samosa' }, { nameKey: 'd_veg_pakoda', img: 'Pakoda' }, { nameKey: 'd_dahi_vada', img: 'Dahi+Vada' }
+                ]},
+                { id: 'sweets', nameKey: 'cat_sweets', icon: '🍬', dishes: [
+                    { nameKey: 'shrikhand', img: 'Shrikhand' }, { nameKey: 'd_puranpoli', img: 'Puranpoli' }, { nameKey: 'd_gulabjamun', img: 'Gulabjamun' }, { nameKey: 'basundi', img: 'Basundi' }, { nameKey: 'd_rasgulla', img: 'Rasgulla' }, { nameKey: 'd_balushahi', img: 'Balushahi' }, { nameKey: 'd_jalebi', img: 'Jalebi' }, { nameKey: 'd_gajar_halwa', img: 'Gajar+Halwa' }, { nameKey: 'd_boondi', img: 'Boondi' }, { nameKey: 'd_barfi', img: 'Barfi' }, { nameKey: 'd_motichoor_laddu', img: 'Laddu' }
+                ]},
+                { id: 'salad', nameKey: 'cat_salad', icon: '🥗', dishes: [
+                    { nameKey: 'd_cucumber_salad', img: 'Salad' }, { nameKey: 'd_carrot_salad', img: 'Salad' }, { nameKey: 'd_sprouts_salad', img: 'Sprouts' }, { nameKey: 'd_dahi_kanda_raita', img: 'Raita' }
+                ]},
+                { id: 'drinks', nameKey: 'cat_drinks', icon: '🥛', dishes: [
+                    { nameKey: 'd_taak', img: 'Buttermilk' }, { nameKey: 'd_mattha', img: 'Mattha' }, { nameKey: 'd_limbu_sarbat', img: 'Lemonade' }, { nameKey: 'd_aamras', img: 'Aamras' }
+                ]}
+            ],
+            reviews: [
+                { quoteKey: 'review_quote_1', authorKey: 'review_author_name_1', roleKey: 'review_author_designation_1' },
+                { quoteKey: 'review_quote_2', authorKey: 'review_author_name_2', roleKey: 'review_author_designation_2' },
+                { quoteKey: 'review_quote_3', authorKey: 'review_author_name_3', roleKey: 'review_author_designation_3' },
+                { quoteKey: 'review_quote_4', authorKey: 'review_author_name_4', roleKey: 'review_author_designation_4' },
+                { quoteKey: 'review_quote_5', authorKey: 'review_author_name_5', roleKey: 'review_author_designation_5' },
+                { quoteKey: 'review_quote_6', authorKey: 'review_author_name_6', roleKey: 'review_author_designation_6' },
+            ],
+            occasionDetails: {
+                 wedding: { nameKey: 'wedding_name', descKey: 'wedding_desc', menu: { starters: ['Paneer Tikka', 'Hara Bhara Kebab'], main: ['Shahi Paneer', 'Dal Makhani', 'Veg Biryani'], dessert: ['Jalebi', 'Ice Cream'] } },
+                 ceremony: { nameKey: 'ceremony_name', descKey: 'ceremony_desc', menu: { starters: ['Spring Roll', 'Chilli Paneer'], main: ['Veg Kolhapuri', 'Jeera Rice', 'Butter Naan'], dessert: ['Gulab Jamun'] } },
+                 birthday: { nameKey: 'birthday_name', descKey: 'birthday_desc', menu: { starters: ['Veg Cutlet', 'French Fries'], main: ['Pav Bhaji', 'Veg Pulao'], dessert: ['Cake', 'Ice Cream'] } },
+                 gettogether: { nameKey: 'gettogether_name', descKey: 'gettogether_desc', menu: { starters: ['Samosa', 'Kachori'], main: ['Chole Bhature', 'Aloo Paratha'], dessert: ['Kheer'] } },
+                 haldi: { nameKey: 'haldi_name', descKey: 'haldi_desc', menu: { starters: ['Dhokla', 'Pakora'], main: ['Puri Bhaji', 'Kadhi'], dessert: ['Shrikhand'] } },
+                 reception: { nameKey: 'reception_name', descKey: 'reception_desc', menu: { starters: ['Manchurian', 'Dahi Vada'], main: ['Malai Kofta', 'Navratan Korma'], dessert: ['Rasmalai', 'Gajar Halwa'] } },
+            }
+        };
+
+        const translations = {
+            en: {
+                preloader_subtitle: 'Crafting Unforgettable Experiences',
+                todays_specials: "Today's Specials",
+                occasion_special: 'Occasion Special',
+                chefs_recommendations: "Chef's Recommendations",
+                our_dishes: 'Our Dishes',
+                book_now: 'Book Now',
+                wedding_name: 'Wedding Special', ceremony_name: 'Ceremony Special', birthday_name: 'Birthday Special',
+                gettogether_name: 'Get-Together', haldi_name: 'Haldi Special', reception_name: 'Reception',
+                occasion_subtitle: 'Occasion Special', view_details_btn: 'View Details',
+                shrikhand: 'Shrikhand', basundi: 'Basundi', paneer_butter_masala: 'Paneer Butter Masala', matar_paneer: 'Matar Paneer', kaju_curry: 'Kaju Curry',
+                mix_veg: 'Mix Veg', aalu_matar: 'Aalu Matar', samosa: 'Samosa', veg_pulao: 'Veg Pulao', masala_dosa: 'Masala Dosa',
+                review_title: 'What Our Clients Say',
+                review_quote_1: '"An absolutely unforgettable culinary experience!"', review_author_name_1: '- Priya Sharma', review_author_designation_1: 'Wedding Client',
+                review_quote_2: '"The food for our corporate event was simply divine."', review_author_name_2: '- Sameer Verma', review_author_designation_2: 'Corporate Event',
+                review_quote_3: '"Best catering for my daughter\'s birthday party!"', review_author_name_3: '- Anjali Singh', review_author_designation_3: 'Birthday Party',
+                review_quote_4: '"Impeccable service and delicious food. Highly recommended!"', review_author_name_4: '- Rohan Mehta', review_author_designation_4: 'Reception Client',
+                review_quote_5: '"They made our get-together special. Every dish was a hit."', review_author_name_5: '- Aisha Khan', review_author_designation_5: 'Get-Together',
+                review_quote_6: '"Truly professional and the taste was authentic. 5 stars!"', review_author_name_6: '- Vikram Rathod', review_author_designation_6: 'Wedding Client',
+                wedding_desc: 'A grand feast for the most important day of your life. We provide a royal culinary experience that your guests will remember forever.',
+                ceremony_desc: 'Celebrate your sacred union with delectable dishes. Our menu is crafted to add a touch of elegance and flavor to your ceremony.',
+                birthday_desc: 'From kids to adults, our birthday party menus are designed to be fun, delicious, and cater to all tastes. Lets make the celebration extra special!',
+                gettogether_desc: 'Casual, comforting, and full of flavor. Our get-together packages are perfect for family reunions, friendly gatherings, and making memories.',
+                haldi_desc: 'Bright, traditional, and auspicious. Our Haldi ceremony menu features classic dishes that perfectly complement the vibrant atmosphere of the event.',
+                reception_desc: 'An elegant and sophisticated spread for your grand reception. Impress your guests with a wide variety of gourmet dishes and impeccable service.',
+                modal_starters: 'Starters', modal_main_course: 'Main Course', modal_desserts: 'Desserts', book_package: 'Book This Package',
+                cat_breads: 'Breads', cat_rice: 'Rice', cat_curries: 'Curries', cat_fry_side: 'Fry/Side Dish', cat_snacks: 'Snacks', cat_sweets: 'Sweets', cat_salad: 'Salad/Raita', cat_drinks: 'Drinks',
+                d_gahu_poli: 'Wheat Poli', d_jwari_bhakri: 'Jowar Bhakri', d_bajri_bhakri: 'Bajra Bhakri', d_plain_rice: 'Plain Rice', d_varan_bhat: 'Varan Bhat', d_jeera_rice: 'Jeera Rice', d_masala_bhat: 'Masala Bhat', d_dal_khichdi: 'Dal Khichdi', d_batata_bhaji: 'Potato Curry', d_cabbage_matar: 'Cabbage Peas', d_vangi_batata: 'Brinjal Potato', d_chana_masala: 'Chana Masala', d_papad: 'Papad (Roasted/Fried)', d_masala_papad: 'Masala Papad', d_bhaji: 'Bhaji (Onion, Potato, Chilli)', d_sev_bhaji: 'Sev Bhaji', d_khari_boondi: 'Khari Boondi', d_veg_pakoda: 'Veg Pakoda', d_dahi_vada: 'Dahi Vada', d_puranpoli: 'Puran Poli', d_gulabjamun: 'Gulabjamun', d_rasgulla: 'Rasgulla', d_balushahi: 'Balushahi', d_jalebi: 'Jalebi', d_gajar_halwa: 'Gajar Halwa', d_boondi: 'Boondi', d_barfi: 'Barfi', d_motichoor_laddu: 'Motichoor Laddu', d_cucumber_salad: 'Cucumber Salad', d_carrot_salad: 'Carrot Salad', d_sprouts_salad: 'Sprouts Salad', d_dahi_kanda_raita: 'Onion Raita', d_taak: 'Buttermilk', d_mattha: 'Spiced Buttermilk', d_limbu_sarbat: 'Lemonade', d_aamras: 'Aamras (Seasonal)',
+            },
+            hi: {
+                preloader_subtitle: 'अविस्मरणीय अनुभव तैयार करना',
+                todays_specials: 'आज के विशेष',
+                occasion_special: 'अवसर विशेष',
+                chefs_recommendations: 'शेफ की सिफारिशें',
+                our_dishes: 'हमारे व्यंजन',
+                book_now: 'अभी बुक करें',
+                wedding_name: 'शादी विशेष', ceremony_name: 'समारोह विशेष', birthday_name: 'जन्मदिन विशेष',
+                gettogether_name: 'गेट-टुगेदर', haldi_name: 'हल्दी विशेष', reception_name: 'रिसेप्शन',
+                occasion_subtitle: 'अवसर विशेष', view_details_btn: 'विवरण देखें',
+                shrikhand: 'श्रीखंड', basundi: 'बासुंदी', paneer_butter_masala: 'पनीर बटर मसाला', matar_paneer: 'मटर पनीर', kaju_curry: 'काजू करी',
+                mix_veg: 'मिक्स वेज', aalu_matar: 'आलू मटर', samosa: 'समोसा', veg_pulao: 'वेज पुलाव', masala_dosa: 'मसाला डोसा',
+                review_title: 'हमारे ग्राहक क्या कहते हैं',
+                review_quote_1: '"एक बिल्कुल अविस्मरणीय पाक अनुभव!"', review_author_name_1: '- प्रिया शर्मा', review_author_designation_1: 'वेडिंग क्लाइंट',
+                review_quote_2: '"हमारे कॉर्पोरेट कार्यक्रम के लिए भोजन बस दिव्य था।"', review_author_name_2: '- समीर वर्मा', review_author_designation_2: 'कॉर्पोरेट कार्यक्रम',
+                review_quote_3: '"मेरी बेटी की जन्मदिन की पार्टी के लिए सर्वश्रेष्ठ खानपान!"', review_author_name_3: '- अंजलि सिंह', review_author_designation_3: 'जन्मदिन की पार्टी',
+                review_quote_4: '"त्रुटिहीन सेवा और स्वादिष्ट भोजन। अत्यधिक अनुशंसित!"', review_author_name_4: '- रोहन मेहता', review_author_designation_4: 'रिसेप्शन क्लाइंट',
+                review_quote_5: '"उन्होंने हमारे गेट-टुगेदर को खास बना दिया। हर व्यंजन हिट था।"', review_author_name_5: '- आयशा खान', review_author_designation_5: 'गेट-टुगेदर',
+                review_quote_6: '"वास्तव में पेशेवर और स्वाद प्रामाणिक था। 5 सितारे!"', review_author_name_6: '- विक्रम राठौड़', review_author_designation_6: 'वेडिंग क्लाइंट',
+                wedding_desc: 'आपके जीवन के सबसे महत्वपूर्ण दिन के लिए एक भव्य दावत। हम एक शाही पाक अनुभव प्रदान करते हैं जिसे आपके मेहमान हमेशा याद रखेंगे।',
+                ceremony_desc: 'स्वादिष्ट व्यंजनों के साथ अपने पवित्र मिलन का जश्न मनाएं। हमारा मेनू आपके समारोह में सुंदरता और स्वाद का स्पर्श जोड़ने के लिए तैयार किया गया है।',
+                birthday_desc: 'बच्चों से लेकर बड़ों तक, हमारे जन्मदिन पार्टी मेनू मज़ेदार, स्वादिष्ट और सभी स्वादों को पूरा करने के लिए डिज़ाइन किए गए हैं। आइए उत्सव को और खास बनाएं!',
+                gettogether_desc: 'आकस्मिक, आरामदायक और स्वाद से भरपूर। हमारे गेट-टुगेदर पैकेज पारिवारिक पुनर्मिलन, मैत्रीपूर्ण समारोहों और यादें बनाने के लिए एकदम सही हैं।',
+                haldi_desc: 'उज्ज्वल, पारंपरिक और शुभ। हमारे हल्दी समारोह मेनू में क्लासिक व्यंजन हैं जो कार्यक्रम के जीवंत वातावरण को पूरी तरह से पूरक करते हैं।',
+                reception_desc: 'आपके भव्य स्वागत के लिए एक सुरुचिपूर्ण और परिष्कृत प्रसार। विभिन्न प्रकार के रुचिकर व्यंजनों और त्रुटिहीन सेवा से अपने मेहमानों को प्रभावित करें।',
+                modal_starters: 'स्टार्टर्स', modal_main_course: 'मुख्य भोजन', modal_desserts: 'मिठाइयाँ', book_package: 'यह पैकेज बुक करें',
+                cat_breads: 'रोटी/भाकरी', cat_rice: 'चावल', cat_curries: 'सब्जियां', cat_fry_side: 'फ्राई/साइड डिश', cat_snacks: 'स्नैक्स/स्टार्टर', cat_sweets: 'मिठाइयां', cat_salad: 'सलाद/रायता', cat_drinks: 'पेय',
+                d_gahu_poli: 'गेहूं की पोली', d_jwari_bhakri: 'ज्वार की भाकरी', d_bajri_bhakri: 'बाजरे की भाकरी', d_plain_rice: 'सादा चावल', d_varan_bhat: 'वरण भात', d_jeera_rice: 'जीरा राइस', d_masala_bhat: 'मसाला भात', d_dal_khichdi: 'दाल खिचड़ी', d_batata_bhaji: 'आलू की सब्जी', d_cabbage_matar: 'पत्तागोभी मटर', d_vangi_batata: 'बैंगन आलू', d_chana_masala: 'चना मसाला', d_papad: 'पापड़ (भुना/तला हुआ)', d_masala_papad: 'मसाला पापड़', d_bhaji: 'भजी (प्याज, आलू, मिर्च)', d_sev_bhaji: 'सेव भाजी', d_khari_boondi: 'खारी बूंदी', d_veg_pakoda: 'वेज पकोड़ा', d_dahi_vada: 'दही वड़ा', d_puranpoli: 'पुरण पोली', d_gulabjamun: 'गुलाबजामुन', d_rasgulla: 'रसगुल्ला', d_balushahi: 'बालूशाही', d_jalebi: 'जलेबी', d_gajar_halwa: 'गाजर का हलवा', d_boondi: 'बूंदी', d_barfi: 'बर्फी', d_motichoor_laddu: 'मोतीचूर लड्डू', d_cucumber_salad: 'ककड़ी का सलाद', d_carrot_salad: 'गाजर का सलाद', d_sprouts_salad: 'अंकुरित सलाद', d_dahi_kanda_raita: 'प्याज का रायता', d_taak: 'छाछ', d_mattha: 'मसाला छाछ', d_limbu_sarbat: 'नींबू शरबत', d_aamras: 'आमरस (मौसमी)',
+            },
+            mr: {
+                preloader_subtitle: 'अविस्मरणीय अनुभव तयार करणे',
+                todays_specials: 'आजचे विशेष',
+                occasion_special: 'प्रसंग विशेष',
+                chefs_recommendations: 'शेफच्या शिफारसी',
+                our_dishes: 'आमचे पदार्थ',
+                book_now: 'आताच बुक करा',
+                wedding_name: 'लग्न विशेष', ceremony_name: 'समारंभ विशेष', birthday_name: 'वाढदिवस विशेष',
+                gettogether_name: 'गेट-टुगेदर', haldi_name: 'हळद विशेष', reception_name: 'रिसेप्शन',
+                occasion_subtitle: 'प्रसंग विशेष', view_details_btn: 'तपशील पहा',
+                shrikhand: 'श्रीखंड', basundi: 'बासुंदी', paneer_butter_masala: 'पनीर बटर मसाला', matar_paneer: 'मटार पनीर', kaju_curry: 'काजू करी',
+                mix_veg: 'मिक्स व्हेज', aalu_matar: 'आलू मटार', samosa: 'समोसा', veg_pulao: 'व्हेज पुलाव', masala_dosa: 'मसाला डोसा',
+                review_title: 'आमचे ग्राहक काय म्हणतात',
+                review_quote_1: '"एक अविस्मरणीय स्वयंपाकाचा अनुभव!"', review_author_name_1: '- प्रिया शर्मा', review_author_designation_1: 'वेडिंग क्लायंट',
+                review_quote_2: '"आमच्या कॉर्पोरेट कार्यक्रमासाठी जेवण फक्त दैवी होते."', review_author_name_2: '- समीर वर्मा', review_author_designation_2: 'कॉर्पोरेट कार्यक्रम',
+                review_quote_3: '"माझ्या मुलीच्या वाढदिवसाच्या पार्टीसाठी सर्वोत्तम केटरिंग!"', review_author_name_3: '- अंजली सिंग', review_author_designation_3: 'वाढदिवसाची पार्टी',
+                review_quote_4: '"उत्तम सेवा आणि स्वादिष्ट जेवण. अत्यंत शिफारसीय!"', review_author_name_4: '- रोहन मेहता', review_author_designation_4: 'रिसेप्शन क्लायंट',
+                review_quote_5: '"त्यांनी आमचे गेट-टुगेदर खास बनवले. प्रत्येक डिश हिट होती."', review_author_name_5: '- आयशा खान', review_author_designation_5: 'गेट-टुगेदर',
+                review_quote_6: '"खरोखर व्यावसायिक आणि चव अस्सल होती. 5 तारे!"', review_author_name_6: '- विक्रम राठोड', review_author_designation_6: 'वेडिंग क्लायंट',
+                wedding_desc: 'तुमच्या आयुष्यातील सर्वात महत्त्वाच्या दिवसासाठी एक भव्य मेजवानी. आम्ही एक शाही स्वयंपाकाचा अनुभव प्रदान करतो जो तुमचे पाहुणे कायम लक्षात ठेवतील.',
+                ceremony_desc: 'तुमच्या पवित्र मिलनाचा आनंद स्वादिष्ट पदार्थांनी साजरा करा. आमचा मेनू तुमच्या समारभात अभिजातपणा आणि चव वाढवण्यासाठी तयार केला आहे.',
+                birthday_desc: 'लहान मुलांपासून मोठ्यांपर्यंत, आमचे वाढदिवस पार्टी मेनू मजेदार, स्वादिष्ट आणि सर्व चवी पूर्ण करण्यासाठी डिझाइन केलेले आहेत। चला उत्सव अधिक खास बनवूया!',
+                gettogether_desc: 'अनौपचारिक, आरामदायक आणि चवीने परिपूर्ण. आमचे गेट-टुगेदर पॅकेजेस कौटुंबिक पुनर्मिलन, मैत्रीपूर्ण संमेलने आणि आठवणी तयार करण्यासाठी योग्य आहेत.',
+                haldi_desc: 'उजळ, पारंपारिक आणि शुभ. आमच्या हळदी समारंभाच्या मेनूमध्ये क्लासिक पदार्थ आहेत जे कार्यक्रमाच्या उत्साही वातावरणाला उत्तम प्रकारे पूरक आहेत।',
+                reception_desc: 'तुमच्या भव्य स्वागतासाठी एक मोहक आणि अत्याधुनिक मेजवानी. विविध प्रकारच्या स्वादिष्ट पदार्थांनी आणि उत्तम सेवेने तुमच्या पाहुण्यांना प्रभावित करा।',
+                modal_starters: 'स्टार्टर्स', modal_main_course: 'मुख्य जेवण', modal_desserts: 'मिठाई', book_package: 'हे पॅकेज बुक करा',
+                cat_breads: 'पोल्या/भाकरी', cat_rice: 'भाताचे प्रकार', cat_curries: 'भाजीचे प्रकार', cat_fry_side: 'फ्राय/साईड डिश', cat_snacks: 'स्नॅक्स/स्टार्टर', cat_sweets: 'गोड पदार्थ', cat_salad: 'सलाड/रायता', cat_drinks: 'पेय पदार्थ',
+                d_gahu_poli: 'गहूची पोळी', d_jwari_bhakri: 'ज्वारीची भाकरी', d_bajri_bhakri: 'बाजरीची भाकरी', d_plain_rice: 'साधा भात', d_varan_bhat: 'वरण भात', d_jeera_rice: 'जिरे भात', d_masala_bhat: 'मसाला भात', d_dal_khichdi: 'डाळ खिचडी', d_batata_bhaji: 'बटाट्याची भाजी', d_cabbage_matar: 'कोबी मटार', d_vangi_batata: 'वांगी बटाटा', d_chana_masala: 'चणा मसाला', d_papad: 'पापड (भाजलेले/तळलेले)', d_masala_papad: 'मसाला पापड', d_bhaji: 'भजी (कांदा, बटाटा, मिरची)', d_sev_bhaji: 'शेव भाजी', d_khari_boondi: 'खारी बूंदी', d_veg_pakoda: 'वेज पकोडा', d_dahi_vada: 'दही वडा', d_puranpoli: 'पुरणपोळी', d_gulabjamun: 'गुलाबजाम', d_rasgulla: 'रसगुल्ला', d_balushahi: 'बालुशाही', d_jalebi: 'जिलबी', d_gajar_halwa: 'गाजर हलवा', d_boondi: 'बूंदी', d_barfi: 'बर्फी', d_motichoor_laddu: 'मोतीचूर लाडू', d_cucumber_salad: 'काकडी सलाड', d_carrot_salad: 'गाजर सलाड', d_sprouts_salad: 'मोड आलेली कडधान्य सलाड', d_dahi_kanda_raita: 'दही कांदा रायता', d_taak: 'ताक', d_mattha: 'माठ्ठा', d_limbu_sarbat: 'लिंबू सरबत', d_aamras: 'आमरस (सीझनल)',
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const app = {
+                currentLang: 'en',
+                
+                init() {
+                    this.initPreloader();
+                    this.renderContent();
+                    this.initLanguageSwitcher();
+                    this.initSearch();
+                    this.initModals();
+                    this.initScrollAnimations();
+                    this.initNavMenu();
+                    this.initDishCategories();
+                },
+
+                initPreloader() {
+                    const preloader = document.getElementById('preloader');
+                    window.addEventListener('load', () => {
+                        setTimeout(() => preloader.classList.add('hidden'), 1000);
+                    });
+                },
+
+                renderContent() {
+                    const createSpecialItemHTML = (item) => {
+                        const imgSrc = item.id === 'shrikhand' ? './img/shrikhand.jpg' : `https://placehold.co/96x96/2d1b0c/ffebd1?text=${item.img}&font=poppins`;
+                        return `
+                        <a href="#" class="relative flex-shrink-0 w-28 text-center group special-item filterable-item" data-item-id="${item.id}">
+                            <div class="relative w-24 h-24 mx-auto">
+                                <div class="w-full h-full rounded-full plate-effect">
+                                    <img src="${imgSrc}" alt="${item.nameKey}" class="w-full h-full rounded-full object-cover">
+                                </div>
+                            </div>
+                            <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="${item.nameKey}">${translations[this.currentLang][item.nameKey]}</span>
+                        </a>`;
+                    };
+
+                    const createOccasionHTML = (item) => `
+                        <div class="relative bg-gradient-to-br from-red-500 to-red-700 rounded-3xl p-4 pt-20 text-center shadow-lg shadow-black/40 flex-shrink-0 w-40 sm:w-48 flex flex-col items-center filterable-item">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                <div class="relative w-28 h-28">
+                                    <div class="thali-border w-full h-full rounded-full">
+                                        <img src="https://placehold.co/128x128/2d1b0c/ffebd1?text=${item.img}&font=poppins" alt="${item.nameKey}" class="w-full h-full object-cover rounded-full">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-grow flex flex-col justify-center items-center">
+                                <h3 class="font-great-vibes text-white text-3xl" data-translate-key="${item.nameKey}">${translations[this.currentLang][item.nameKey]}</h3>
+                                <p class="text-yellow-200 text-xs uppercase tracking-widest mt-1" data-translate-key="occasion_subtitle">${translations[this.currentLang]['occasion_subtitle']}</p>
+                            </div>
+                            <button class="view-details-btn mt-4 bg-black/30 text-white text-xs font-semibold py-2 px-4 rounded-full hover:bg-black/50 transition-colors" data-occasion="${item.id}" data-translate-key="view_details_btn">${translations[this.currentLang]['view_details_btn']}</button>
+                        </div>`;
+                    
+                    const createReviewHTML = (item) => `
+                        <div class="testimonial-card filterable-item w-[280px] sm:w-[300px] flex-shrink-0">
+                             <div class="avatar-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500/60" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                 </svg>
+                            </div>
+                            <div class="flex-grow w-full">
+                                <div class="flex items-center space-x-1 mb-2 star-rating">
+                                    <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                    <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                    <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                    <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                    <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                </div>
+                                <p class="quote-text mb-3" data-translate-key="${item.quoteKey}">${translations[this.currentLang][item.quoteKey]}</p>
+                                <div class="w-1/2 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto my-2"></div>
+                                <div class="mt-2">
+                                    <p class="author-name" data-translate-key="${item.authorKey}">${translations[this.currentLang][item.authorKey]}</p>
+                                    <p class="author-designation font-semibold tracking-wider" data-translate-key="${item.roleKey}">${translations[this.currentLang][item.roleKey]}</p>
+                                </div>
+                            </div>
+                        </div>`;
+                    
+                    document.querySelector('#specials-scroll-container').innerHTML = contentData.specials.map(createSpecialItemHTML).join('');
+                    document.querySelector('#occasions-section div.flex').innerHTML = contentData.occasions.map(createOccasionHTML).join('');
+                    document.querySelector('#recommendations-section div.flex').innerHTML = contentData.recommendations.map(createSpecialItemHTML).join('');
+                    document.querySelector('#reviews-row-1').innerHTML = contentData.reviews.slice(0,3).map(createReviewHTML).join('');
+                    document.querySelector('#reviews-row-2').innerHTML = contentData.reviews.slice(3,6).map(createReviewHTML).join('');
+                },
+
+                changeLanguage(lang) {
+                    if (!translations[lang]) return;
+                    this.currentLang = lang;
+                    document.querySelectorAll('[data-translate-key]').forEach(el => {
+                        const key = el.getAttribute('data-translate-key');
+                        if (translations[lang][key]) {
+                            el.textContent = translations[lang][key];
+                        }
+                    });
+                    document.getElementById('current-lang').textContent = lang.toUpperCase();
+                    // Re-render dish categories to update tab names and content
+                    this.initDishCategories();
+                },
+
+                initLanguageSwitcher() {
+                    const langToggleButton = document.getElementById('lang-toggle');
+                    const langDropdown = document.getElementById('lang-dropdown');
+                    
+                    const showDropdown = () => {
+                        langDropdown.classList.remove('hidden');
+                        setTimeout(() => langDropdown.classList.remove('opacity-0', 'scale-95'), 10);
+                    };
+                    const hideDropdown = () => {
+                        langDropdown.classList.add('opacity-0', 'scale-95');
+                        setTimeout(() => langDropdown.classList.add('hidden'), 300);
+                    };
+
+                    langToggleButton.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        langDropdown.classList.contains('hidden') ? showDropdown() : hideDropdown();
+                    });
+
+                    document.querySelectorAll('.lang-option').forEach(option => {
+                        option.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            this.changeLanguage(e.target.dataset.lang);
+                            hideDropdown();
+                        });
+                    });
+
+                    document.addEventListener('click', () => hideDropdown());
+                },
+
+                handleSearch(query) {
+                    const spotlightContainer = document.getElementById('search-spotlight');
+                    const allSections = document.querySelectorAll('main section');
+
+                    if (!query) {
+                        spotlightContainer.classList.add('hidden');
+                        allSections.forEach(s => s.classList.remove('hidden'));
+                        return;
+                    }
+
+                    let foundDish = null;
+                    const allDishes = [
+                        ...contentData.specials,
+                        ...contentData.recommendations,
+                        ...contentData.dishCategories.flatMap(cat => cat.dishes)
+                    ];
+
+                    for (const dish of allDishes) {
+                        const dishName = (translations[this.currentLang][dish.nameKey] || dish.nameKey).toLowerCase();
+                        if (dishName.includes(query)) {
+                            foundDish = dish;
+                            break;
+                        }
+                    }
+
+                    if (foundDish) {
+                        allSections.forEach(s => s.classList.add('hidden'));
+                        spotlightContainer.innerHTML = `
+                            <div class="relative dish-spotlight text-center">
+                                <div class="relative w-48 h-48 mx-auto">
+                                    <div class="w-full h-full rounded-full plate-effect">
+                                        <div class="steam" style="left: 45%; top: 10%; animation-delay: 0s; width: 8px; height: 30px;"></div>
+                                        <div class="steam" style="left: 55%; top: 10%; animation-delay: 1.5s; width: 10px; height: 35px;"></div>
+                                        <img src="https://placehold.co/192x192/2d1b0c/ffebd1?text=${foundDish.img || foundDish.name.replace(' ', '+')}&font=poppins" alt="${foundDish.nameKey}" class="w-full h-full rounded-full object-cover">
+                                    </div>
+                                </div>
+                                <span class="text-white text-2xl mt-6 block text-center font-great-vibes">${translations[this.currentLang][foundDish.nameKey] || foundDish.nameKey}</span>
+                            </div>
+                            <button id="close-spotlight" class="absolute bottom-10 bg-red-600/50 hover:bg-red-600 text-white text-sm font-semibold py-2 px-5 rounded-full transition-colors">Close</button>
+                        `;
+                        spotlightContainer.classList.remove('hidden');
+                        
+                        document.getElementById('close-spotlight').onclick = () => {
+                            document.getElementById('search-input').value = '';
+                            this.handleSearch('');
+                        };
+                    } else {
+                        spotlightContainer.classList.add('hidden');
+                        allSections.forEach(s => s.classList.remove('hidden'));
+                    }
+                },
+
+                initSearch() {
+                    const searchInput = document.getElementById('search-input');
+                    let debounceTimer;
+                    searchInput.addEventListener('input', () => {
+                        clearTimeout(debounceTimer);
+                        debounceTimer = setTimeout(() => {
+                            this.handleSearch(searchInput.value.toLowerCase().trim());
+                        }, 300);
+                    });
+                },
+
+                renderDishesForCategory(categoryId) {
+                    const grid = document.getElementById('dish-items-grid');
+                    const category = contentData.dishCategories.find(c => c.id === categoryId);
+                    
+                    grid.innerHTML = '';
+
+                    if (!category) return;
+
+                    category.dishes.forEach((item, index) => {
+                        const dishWrapper = document.createElement('div');
+                        dishWrapper.className = 'dish-item filterable-item';
+                        dishWrapper.style.transitionDelay = `${index * 60}ms`;
+
+                        dishWrapper.innerHTML = `
+                            <a href="#" class="relative text-center group">
+                                <div class="relative w-full aspect-square mx-auto">
+                                    <div class="w-full h-full rounded-full plate-effect">
+                                        <img src="https://placehold.co/96x96/2d1b0c/ffebd1?text=${item.img.replace(' ','+')}&font=poppins" alt="${translations[this.currentLang][item.nameKey]}" class="w-full h-full rounded-full object-cover">
+                                    </div>
+                                </div>
+                                <span class="text-white/80 text-sm mt-2 block group-hover:text-white transition-colors" data-translate-key="${item.nameKey}">${translations[this.currentLang][item.nameKey]}</span>
+                            </a>`;
+                        
+                        grid.appendChild(dishWrapper);
+
+                        setTimeout(() => {
+                            dishWrapper.style.opacity = '1';
+                            dishWrapper.style.transform = 'translateY(0)';
+                        }, 20);
+                    });
+                },
+
+                initDishCategories() {
+                    const tabsContainer = document.getElementById('dish-categories');
+                    tabsContainer.innerHTML = ''; 
+
+                    contentData.dishCategories.forEach(category => {
+                        const tab = document.createElement('button');
+                        tab.className = 'dish-category-tab px-4 py-2 text-sm font-semibold flex-shrink-0';
+                        tab.dataset.categoryId = category.id;
+                        tab.innerHTML = `<span class="mr-1.5">${category.icon}</span> <span data-translate-key="${category.nameKey}">${translations[this.currentLang][category.nameKey]}</span>`;
+                        
+                        tab.onclick = () => {
+                            tabsContainer.querySelector('.active')?.classList.remove('active');
+                            tab.classList.add('active');
+                            this.renderDishesForCategory(category.id);
+                        };
+                        tabsContainer.appendChild(tab);
+                    });
+
+                    const firstTab = tabsContainer.querySelector('.dish-category-tab');
+                    if (firstTab) {
+                        firstTab.classList.add('active');
+                        this.renderDishesForCategory(firstTab.dataset.categoryId);
+                    }
+                },
+                
+                initModals() {
+                    const modal = document.getElementById('modal');
+                    const backdrop = document.getElementById('modal-backdrop');
+                    const panel = document.getElementById('modal-panel');
+                    const closeBtn = document.getElementById('modal-close');
+                    const contentDiv = document.getElementById('modal-content');
+
+                    const openModal = (occasionId) => {
+                        const details = contentData.occasionDetails[occasionId];
+                        if (!details) return;
+
+                        const menuHTML = (titleKey, items) => `
+                            <div class="mb-4">
+                                <h4 class="font-bold text-red-400 mb-2" data-translate-key="${titleKey}">${translations[this.currentLang][titleKey]}</h4>
+                                <ul class="list-disc list-inside text-white/80 text-sm space-y-1">${items.map(item => `<li>${item}</li>`).join('')}</ul>
+                            </div>`;
+                        
+                        const occasionName = translations[this.currentLang][details.nameKey];
+                        const message = `Hello Sarvadnya Caterers, I'd like to inquire about the ${occasionName} package.`;
+                        const whatsappLink = `https://wa.me/917775034821?text=${encodeURIComponent(message)}`;
+
+                        contentDiv.innerHTML = `
+                            <img src="https://placehold.co/500x250/2d1b0c/ffebd1?text=${contentData.occasions.find(o=>o.id===occasionId).img.replace('+',' ')}&font=poppins" class="w-full h-48 object-cover rounded-xl mb-4">
+                            <h2 class="text-3xl md:text-4xl font-great-vibes text-white mb-2 section-title" data-translate-key="${details.nameKey}">${translations[this.currentLang][details.nameKey]}</h2>
+                            <p class="text-white/70 mb-6" data-translate-key="${details.descKey}">${translations[this.currentLang][details.descKey]}</p>
+                            ${menuHTML('modal_starters', details.menu.starters)}
+                            ${menuHTML('modal_main_course', details.menu.main)}
+                            ${menuHTML('modal_desserts', details.menu.dessert)}
+                            <a href="${whatsappLink}" target="_blank" class="block w-full text-center mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-5 rounded-lg transition-colors" data-translate-key="book_package">${translations[this.currentLang]['book_package']}</a>`;
+
+                        modal.classList.remove('hidden');
+                        setTimeout(() => {
+                            backdrop.classList.remove('opacity-0');
+                            panel.classList.remove('opacity-0', 'scale-95');
+                        }, 10);
+                        document.body.style.overflow = 'hidden';
+                    };
+
+                    const closeModal = () => {
+                        backdrop.classList.add('opacity-0');
+                        panel.classList.add('opacity-0', 'scale-95');
+                        setTimeout(() => {
+                            modal.classList.add('hidden');
+                            document.body.style.overflow = '';
+                        }, 300);
+                    };
+
+                    document.body.addEventListener('click', (e) => {
+                        if(e.target.closest('.view-details-btn')) {
+                            openModal(e.target.closest('.view-details-btn').dataset.occasion);
+                        }
+                    });
+                    
+                    closeBtn.addEventListener('click', closeModal);
+                    backdrop.addEventListener('click', closeModal);
+                    document.addEventListener('keydown', (e) => e.key === 'Escape' && !modal.classList.contains('hidden') && closeModal());
+                },
+
+                initScrollAnimations() {
+                    const observer = new IntersectionObserver((entries, obs) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const delay = parseInt(entry.target.style.getPropertyValue('--delay')) || 0;
+                                setTimeout(() => {
+                                    entry.target.classList.add('is-visible');
+                                }, delay);
+                                obs.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.1 });
+
+                    document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+                },
+
+                initNavMenu() {
+                    const menuToggle = document.getElementById('menu-toggle');
+                    const mobileMenu = document.getElementById('mobile-menu');
+                    const navLinks = document.querySelectorAll('.nav-link');
+
+                    const showMenu = () => {
+                        mobileMenu.classList.remove('hidden');
+                        setTimeout(() => mobileMenu.classList.remove('opacity-0'), 10);
+                    };
+
+                    const hideMenu = () => {
+                        mobileMenu.classList.add('opacity-0');
+                        setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+                    };
+
+                    menuToggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (mobileMenu.classList.contains('hidden')) {
+                            showMenu();
+                        } else {
+                            hideMenu();
+                        }
+                    });
+
+                    navLinks.forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            hideMenu();
+                            const targetId = link.getAttribute('href');
+                            const targetElement = document.querySelector(targetId);
+                            if(targetElement) {
+                                e.preventDefault();
+                                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        });
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                            hideMenu();
+                        }
+                    });
+                }
+
+            };
+
+            app.init();
+        });
+    </script>
+</body>
+</html>
+

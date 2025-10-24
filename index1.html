@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarvadnya Caterers - Hot Menu</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Great Vibes for titles, Poppins for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom CSS for complex effects and animations */
+        body {
+            /* Impressive background with a subtle red glow from the top */
+            background: #000000;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden; /* Prevents horizontal scroll from glowing shadows */
+            padding-top: 80px; /* Adjusted padding for navbar */
+        }
+
+        /* --- PRELOADER STYLES START --- */
+        #preloader {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.7s ease-out, visibility 0.7s ease-out;
+        }
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-dots .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ef4444; /* Zomato-like bright red */
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1.0); }
+        }
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .animate-fade-in {
+            animation: fade-in 2s ease-out forwards;
+        }
+        /* --- PRELOADER STYLES END --- */
+
+
+        .font-great-vibes {
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Glowing card shadow using a color from the gradient */
+        .card-glow-shadow {
+            box-shadow: 0 10px 30px -5px rgba(239, 68, 68, 0.4);
+        }
+        
+        /* The 3D "Thali" (plate) effect container */
+        .thali-border {
+            padding: 8px; /* Space between image and border edge */
+            background: radial-gradient(circle, #e0e0e0, #a0a0a0, #606060);
+            box-shadow:
+                /* Outer metallic edge highlight/shadow */
+                0px 0px 5px rgba(255, 255, 255, 0.4) inset,
+                0px 0px 10px rgba(0, 0, 0, 0.6),
+                /* Inner shadow for depth - makes it look like a plate */
+                0px 5px 15px rgba(0, 0, 0, 0.7) inset,
+                /* Subtle extra inner highlights */
+                0px -2px 3px rgba(255, 255, 255, 0.3) inset;
+        }
+
+        /* Smoke particle base styles */
+        .smoke-particle {
+            position: absolute;
+            bottom: 0;
+            border-radius: 50%;
+            /* Soft, wispy look using a transparent gradient */
+            background: radial-gradient(circle, rgba(255, 245, 240, 0.4) 0%, rgba(255, 245, 240, 0) 70%);
+            opacity: 0;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        
+        /* Keyframes for the smoke/steam animations */
+        @keyframes smoke-rise-straight {
+            0% { transform: translateY(0) scale(0.8); opacity: 0; }
+            20% { opacity: 0.7; }
+            100% { transform: translateY(-150px) scale(1.5); opacity: 0; }
+        }
+        @keyframes smoke-rise-swirl-left {
+            0% { transform: translateY(0) translateX(0) scale(0.5) rotate(0deg); opacity: 0; }
+            25% { opacity: 0.6; }
+            100% { transform: translateY(-160px) translateX(-50px) scale(1.4) rotate(-90deg); opacity: 0; }
+        }
+        @keyframes smoke-rise-swirl-right {
+            0% { transform: translateY(0) translateX(0) scale(0.6) rotate(0deg); opacity: 0; }
+            30% { opacity: 0.8; }
+            100% { transform: translateY(-140px) translateX(50px) scale(1.6) rotate(90deg); opacity: 0; }
+        }
+
+        /* Language Dropdown Transition */
+        .lang-dropdown {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* 3D Plate effect for hero section */
+        .plate-effect {
+            background: radial-gradient(circle, #d4d4d4, #a3a3a3, #737373);
+            box-shadow:
+                /* Sharper inner highlight on top rim */
+                inset 0px 3px 4px rgba(255, 255, 255, 0.5),
+                /* A soft, dark inner shadow all around for general depth */
+                inset 0px 0px 10px rgba(0, 0, 0, 0.4),
+                /* A much stronger, darker shadow at the bottom for the main depth effect */
+                inset 0px -8px 15px rgba(0, 0, 0, 0.6),
+                /* Outer shadow for lift */
+                0 5px 15px rgba(0,0,0,0.3);
+            padding: 6px; /* Controls the thickness of the plate rim */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        a:hover .plate-effect {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow:
+                /* Keep the inner shadows consistent */
+                inset 0px 3px 4px rgba(255, 255, 255, 0.5),
+                inset 0px 0px 10px rgba(0, 0, 0, 0.4),
+                inset 0px -8px 15px rgba(0, 0, 0, 0.6),
+                /* Enhance the glowing outer shadow on hover */
+                0 8px 25px rgba(239, 68, 68, 0.5);
+        }
+
+        /* Hide scrollbar for the horizontal hero section */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        
+        /* Impressive Section Title Style */
+        .section-title {
+            text-shadow: 0 0 15px rgba(239, 68, 68, 0.6), 0 0 5px rgba(251, 191, 36, 0.5);
+        }
+
+        /* Entrance Animation */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in-down {
+            animation: fadeInDown 0.8s ease-out forwards;
+        }
+
+        /* --- REVIEW CARD STYLES START --- */
+        .testimonial-card {
+            background: radial-gradient(circle, #2a2a2a, #1a1a1a);
+            border: 15px solid;
+            border-image-source: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23FBBF24;' /%3E%3Cstop offset='50%25' style='stop-color:%23F59E0B;' /%3E%3Cstop offset='100%25' style='stop-color:%23D97706;' /%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M0 10 C 0 5, 5 0, 10 0 L90 0 C 95 0, 100 5, 100 10 L100 90 C 100 95, 95 100, 90 100 L10 100 C 5 100, 0 95, 0 90 Z' fill='none' stroke='url(%23grad)' stroke-width='4'/%3E%3Ccircle cx='50' cy='15' r='8' fill='%23ef4444'/%3E%3Ccircle cx='15' cy='50' r='8' fill='%23ef4444'/%3E%3Ccircle cx='85' cy='50' r='8' fill='%23ef4444'/%3E%3Ccircle cx='50' cy='85' r='8' fill='%23ef4444'/%3E%3Cpath d='M20 20 L 80 80 M 80 20 L 20 80' stroke='%23FBBF24' stroke-width='2'/%3E%3C/svg%3E");
+            border-image-slice: 40;
+            border-image-repeat: round;
+            box-shadow: 0 20px 50px -15px rgba(0,0,0,0.7), 0 0 30px rgba(251, 191, 36, 0.3);
+            position: relative;
+            overflow: hidden; /* Important for the shimmer effect */
+        }
+
+        /* Shimmer Effect */
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 75%;
+            height: 100%;
+            background: linear-gradient(100deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            animation: shimmer 6s infinite linear;
+        }
+
+        @keyframes shimmer {
+            from { left: -100%; }
+            to { left: 120%; }
+        }
+        
+        /* 3D Gold Star */
+        .star-3d {
+            width: 20px; /* Made stars smaller */
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+        .star-3d:hover {
+            transform: scale(1.2);
+        }
+        /* --- REVIEW CARD STYLES END --- */
+    </style>
+</head>
+<body class="min-h-screen pb-20">
+    
+    <!-- SVG Definitions for reuse -->
+    <svg width="0" height="0" style="position:absolute">
+        <defs>
+            <!-- Gradient for 3D Gold Star -->
+            <linearGradient id="gold-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" style="stop-color:#FFDF00; stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#D4AF37; stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#B8860B; stop-opacity:1" />
+            </linearGradient>
+            <!-- 3D Star Symbol -->
+            <symbol id="star-3d-symbol" viewBox="0 0 51 48">
+                <path fill="url(#gold-gradient)" stroke="#654321" stroke-width="1.5" d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
+                <path fill="rgba(255,255,255,0.4)" d="m25,1 6,17h2l-13,9-5-17z" />
+            </symbol>
+        </defs>
+    </svg>
+
+    <!-- Preloader Start -->
+    <div id="preloader" class="fixed inset-0 bg-black z-[100] flex flex-col items-center justify-center">
+        <div class="text-center animate-fade-in">
+            <img src="https://placehold.co/128x128/000000/ef4444?text=S&font=great-vibes" alt="Sarvadnya Logo" class="w-28 h-28 mx-auto rounded-full mb-4">
+            <h1 class="font-great-vibes text-5xl text-red-500" style="text-shadow: 0 0 15px rgba(239, 68, 68, 0.6);">
+                Sarvadnya Caterers
+            </h1>
+            <p class="text-white/70 text-sm mt-2 tracking-wider" data-translate-key="preloader_subtitle">Crafting Unforgettable Experiences</p>
+            <div class="loader-dots mt-6 flex justify-center">
+                <span class="dot mx-1.5"></span>
+                <span class="dot mx-1.5" style="animation-delay: 0.2s;"></span>
+                <span class="dot mx-1.5" style="animation-delay: 0.4s;"></span>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader End -->
+
+
+    <!-- Floating Navigation Bar -->
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-md bg-black/50 backdrop-blur-lg rounded-full shadow-lg z-50 flex items-center justify-between px-3 py-2 gap-2">
+        <!-- Logo -->
+        <img src="https://placehold.co/40x40/000000/ef4444?text=S&font=great-vibes" alt="Sarvadnya Logo" class="h-8 w-8 rounded-full flex-shrink-0">
+        
+        <!-- Search Bar -->
+        <div class="relative flex-grow">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <svg class="w-4 h-4 text-white/40" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </span>
+            <input type="text" id="search-input" placeholder="Search..." class="w-full bg-gray-800/50 text-white/70 placeholder-white/40 text-sm rounded-full py-1.5 pl-9 pr-3 focus:outline-none focus:ring-2 focus:ring-red-500 transition">
+        </div>
+
+        <!-- Language Switcher -->
+        <div class="relative flex-shrink-0">
+            <button id="lang-toggle" class="flex items-center gap-1 text-white/80 hover:text-white transition-colors">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20z"/><path d="M2 12h20"/></svg>
+                <span id="current-lang">EN</span>
+            </button>
+            <div id="lang-dropdown" class="lang-dropdown absolute top-full right-0 mt-2 w-32 bg-gray-900/80 backdrop-blur-lg rounded-lg shadow-xl p-2 hidden opacity-0 transform scale-95">
+                <a href="#" class="lang-option block w-full text-left px-4 py-2 text-sm text-white/80 hover:bg-red-500/50 hover:text-white rounded" data-lang="en">English</a>
+                <a href="#" class="lang-option block w-full text-left px-4 py-2 text-sm text-white/80 hover:bg-red-500/50 hover:text-white rounded" data-lang="hi">हिन्दी</a>
+                <a href="#" class="lang-option block w-full text-left px-4 py-2 text-sm text-white/80 hover:bg-red-500/50 hover:text-white rounded" data-lang="mr">मराठी</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section: Today's Specials -->
+    <section id="specials-section" class="w-full max-w-md mx-auto py-6 px-4 fade-in-down">
+        <h2 class="text-white text-4xl font-great-vibes text-center mb-8 section-title" data-translate-key="todays_specials">Today's Specials</h2>
+        <div class="flex space-x-4 overflow-x-auto pb-4 no-scrollbar">
+            <!-- Special Item 1 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Kebab" alt="Kebab" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="kebab_platter">Kebab Platter</span>
+            </a>
+            <!-- Special Item 2 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Samosa" alt="Samosa" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="spicy_samosa">Spicy Samosa</span>
+            </a>
+            <!-- Special Item 3 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Thali" alt="Thali" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="special_thali">Special Thali</span>
+            </a>
+            <!-- Special Item 4 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Lassi" alt="Lassi" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="mango_lassi">Mango Lassi</span>
+            </a>
+            <!-- Special Item 5 -->
+             <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Gulab" alt="Gulab Jamun" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="gulab_jamun">Gulab Jamun</span>
+            </a>
+        </div>
+        <p class="no-results hidden text-white/50 text-center w-full mt-4">No specials found.</p>
+    </section>
+
+    <!-- Hot Food Menu Section -->
+    <section id="occasions-section" class="w-full max-w-md mx-auto py-6 px-4 overflow-hidden fade-in-down" style="animation-delay: 0.3s;">
+        <h2 class="text-white text-4xl font-great-vibes text-center mb-6 section-title" data-translate-key="occasion_special">Occasion Special</h2>
+        <div class="flex space-x-4 overflow-x-auto pb-4 no-scrollbar pt-16">
+
+            <!-- Card 1: Wedding Special -->
+            <div class="relative bg-gradient-to-br from-red-500 via-red-600 to-orange-400 rounded-3xl p-4 pt-20 pb-4 text-center card-glow-shadow flex-shrink-0 w-48 transition-transform duration-300 hover:scale-105 flex flex-col items-center filterable-item">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="relative w-28 h-28">
+                        <div class="thali-border w-full h-full rounded-full">
+                            <img src="https://placehold.co/128x128/333/FFF?text=Wedding" alt="Wedding Special" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                    </div>
+                </div>
+                <div class="flex-grow flex flex-col justify-center items-center">
+                    <h3 class="font-great-vibes text-white text-3xl" data-translate-key="wedding_name">Wedding Special</h3>
+                    <p class="text-yellow-200 text-xs uppercase tracking-widest mt-1" data-translate-key="occasion_subtitle">Occasion Special</p>
+                </div>
+                <a href="#" class="mt-4 bg-black/30 text-white text-xs font-semibold py-2 px-4 rounded-full hover:bg-black/50 transition-colors" data-translate-key="view_details_btn">
+                    View Details
+                </a>
+            </div>
+
+            <!-- Card 2: Ceremony Special -->
+            <div class="relative bg-gradient-to-br from-red-500 via-red-600 to-orange-400 rounded-3xl p-4 pt-20 pb-4 text-center card-glow-shadow flex-shrink-0 w-48 transition-transform duration-300 hover:scale-105 flex flex-col items-center filterable-item">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="relative w-28 h-28">
+                        <div class="thali-border w-full h-full rounded-full">
+                            <img src="https://placehold.co/128x128/333/FFF?text=Rings" alt="Ceremony Special" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                    </div>
+                </div>
+                 <div class="flex-grow flex flex-col justify-center items-center">
+                    <h3 class="font-great-vibes text-white text-3xl" data-translate-key="ceremony_name">Ceremony Special</h3>
+                    <p class="text-yellow-200 text-xs uppercase tracking-widest mt-1" data-translate-key="occasion_subtitle">Occasion Special</p>
+                </div>
+                <a href="#" class="mt-4 bg-black/30 text-white text-xs font-semibold py-2 px-4 rounded-full hover:bg-black/50 transition-colors" data-translate-key="view_details_btn">
+                    View Details
+                </a>
+            </div>
+
+            <!-- Card 3: Birthday Special -->
+            <div class="relative bg-gradient-to-br from-red-500 via-red-600 to-orange-400 rounded-3xl p-4 pt-20 pb-4 text-center card-glow-shadow flex-shrink-0 w-48 transition-transform duration-300 hover:scale-105 flex flex-col items-center filterable-item">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="relative w-28 h-28">
+                        <div class="thali-border w-full h-full rounded-full">
+                            <img src="https://placehold.co/128x128/333/FFF?text=Birthday" alt="Birthday Special" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                    </div>
+                </div>
+                 <div class="flex-grow flex flex-col justify-center items-center">
+                    <h3 class="font-great-vibes text-white text-3xl" data-translate-key="birthday_name">Birthday Special</h3>
+                    <p class="text-yellow-200 text-xs uppercase tracking-widest mt-1" data-translate-key="occasion_subtitle">Occasion Special</p>
+                </div>
+                <a href="#" class="mt-4 bg-black/30 text-white text-xs font-semibold py-2 px-4 rounded-full hover:bg-black/50 transition-colors" data-translate-key="view_details_btn">
+                    View Details
+                </a>
+            </div>
+
+            <!-- Card 4: Get-Together -->
+            <div class="relative bg-gradient-to-br from-red-500 via-red-600 to-orange-400 rounded-3xl p-4 pt-20 pb-4 text-center card-glow-shadow flex-shrink-0 w-48 transition-transform duration-300 hover:scale-105 flex flex-col items-center filterable-item">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="relative w-28 h-28">
+                        <div class="thali-border w-full h-full rounded-full">
+                            <img src="https://placehold.co/128x128/333/FFF?text=Party" alt="Get-Together" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                    </div>
+                </div>
+                 <div class="flex-grow flex flex-col justify-center items-center">
+                    <h3 class="font-great-vibes text-white text-3xl" data-translate-key="gettogether_name">Get-Together</h3>
+                    <p class="text-yellow-200 text-xs uppercase tracking-widest mt-1" data-translate-key="occasion_subtitle">Occasion Special</p>
+                </div>
+                <a href="#" class="mt-4 bg-black/30 text-white text-xs font-semibold py-2 px-4 rounded-full hover:bg-black/50 transition-colors" data-translate-key="view_details_btn">
+                    View Details
+                </a>
+            </div>
+            
+            <!-- Card 5: Haldi Special -->
+            <div class="relative bg-gradient-to-br from-red-500 via-red-600 to-orange-400 rounded-3xl p-4 pt-20 pb-4 text-center card-glow-shadow flex-shrink-0 w-48 transition-transform duration-300 hover:scale-105 flex flex-col items-center filterable-item">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="relative w-28 h-28">
+                        <div class="thali-border w-full h-full rounded-full">
+                            <img src="https://placehold.co/128x128/333/FFF?text=Haldi" alt="Haldi Special" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                    </div>
+                </div>
+                 <div class="flex-grow flex flex-col justify-center items-center">
+                    <h3 class="font-great-vibes text-white text-3xl" data-translate-key="haldi_name">Haldi Special</h3>
+                    <p class="text-yellow-200 text-xs uppercase tracking-widest mt-1" data-translate-key="occasion_subtitle">Occasion Special</p>
+                </div>
+                <a href="#" class="mt-4 bg-black/30 text-white text-xs font-semibold py-2 px-4 rounded-full hover:bg-black/50 transition-colors" data-translate-key="view_details_btn">
+                    View Details
+                </a>
+            </div>
+
+            <!-- Card 6: Reception -->
+            <div class="relative bg-gradient-to-br from-red-500 via-red-600 to-orange-400 rounded-3xl p-4 pt-20 pb-4 text-center card-glow-shadow flex-shrink-0 w-48 transition-transform duration-300 hover:scale-105 flex flex-col items-center filterable-item">
+                <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="relative w-28 h-28">
+                        <div class="thali-border w-full h-full rounded-full">
+                            <img src="https://placehold.co/128x128/333/FFF?text=Reception" alt="Reception" class="w-full h-full object-cover rounded-full">
+                        </div>
+                        <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                    </div>
+                </div>
+                 <div class="flex-grow flex flex-col justify-center items-center">
+                    <h3 class="font-great-vibes text-white text-3xl" data-translate-key="reception_name">Reception</h3>
+                    <p class="text-yellow-200 text-xs uppercase tracking-widest mt-1" data-translate-key="occasion_subtitle">Occasion Special</p>
+                </div>
+                <a href="#" class="mt-4 bg-black/30 text-white text-xs font-semibold py-2 px-4 rounded-full hover:bg-black/50 transition-colors" data-translate-key="view_details_btn">
+                    View Details
+                </a>
+            </div>
+
+        </div>
+        <p class="no-results hidden text-white/50 text-center w-full mt-4">No occasions found.</p>
+    </section>
+
+    <!-- Chef's Recommendations Section -->
+    <section id="recommendations-section" class="w-full max-w-md mx-auto py-6 px-4 fade-in-down" style="animation-delay: 0.6s;">
+        <h2 class="text-white text-4xl font-great-vibes text-center mb-6 section-title" data-translate-key="chefs_recommendations">Chef's Recommendations</h2>
+        <div class="flex space-x-4 overflow-x-auto pb-4 no-scrollbar">
+            <!-- Item 1 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Soup" alt="Manchow Soup" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="manchow_soup">Manchow Soup</span>
+            </a>
+            <!-- Item 2 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Kheer" alt="Rice Kheer" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="rice_kheer">Rice Kheer</span>
+            </a>
+            <!-- Item 3 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Pakora" alt="Mix Veg Pakora" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="mix_veg_pakora">Mix Veg Pakora</span>
+            </a>
+            <!-- Item 4 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Dosa" alt="Masala Dosa" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="masala_dosa">Masala Dosa</span>
+            </a>
+            <!-- Item 5 -->
+             <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=IceCream" alt="Kesar Pista Ice Cream" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="kesar_pista">Kesar Pista</span>
+            </a>
+        </div>
+        <p class="no-results hidden text-white/50 text-center w-full mt-4">No recommendations found.</p>
+    </section>
+
+    <!-- Our Dishes Section -->
+    <section id="dishes-section" class="w-full max-w-md mx-auto py-6 px-4 fade-in-down" style="animation-delay: 0.9s;">
+        <h2 class="text-white text-4xl font-great-vibes text-center mb-6 section-title" data-translate-key="our_dishes">Our Dishes</h2>
+        <div class="flex space-x-4 overflow-x-auto pb-4 no-scrollbar">
+            <!-- Dish Item 1 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Paneer" alt="Paneer Tikka" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors">Paneer Tikka</span>
+            </a>
+            <!-- Dish Item 2 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Biryani" alt="Veg Biryani" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors">Veg Biryani</span>
+            </a>
+            <!-- Dish Item 3 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Chole" alt="Chole Bhature" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors">Chole Bhature</span>
+            </a>
+            <!-- Dish Item 4 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Kofta" alt="Malai Kofta" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors">Malai Kofta</span>
+            </a>
+            <!-- Dish Item 5 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Dal" alt="Dal Makhani" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors">Dal Makhani</span>
+            </a>
+            <!-- Dish Item 6 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Jalebi" alt="Jalebi" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors">Jalebi</span>
+            </a>
+            <!-- Dish Item 7 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Pulao" alt="Veg Pulao" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors">Veg Pulao</span>
+            </a>
+            <!-- Dish Item 8 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Naan" alt="Butter Naan" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors">Butter Naan</span>
+            </a>
+            <!-- Dish Item 9 -->
+            <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Rasgulla" alt="Rasgulla" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors">Rasgulla</span>
+            </a>
+             <!-- Dish Item 10 -->
+             <a href="#" class="flex-shrink-0 w-28 text-center group filterable-item">
+                <div class="relative w-24 h-24 mx-auto">
+                    <div class="w-full h-full rounded-full plate-effect">
+                        <img src="https://placehold.co/96x96/333/FFF?text=Raita" alt="Boondi Raita" class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <div class="smoke-container absolute inset-0 z-10 pointer-events-none"></div>
+                </div>
+                <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors">Boondi Raita</span>
+            </a>
+        </div>
+        <p class="no-results hidden text-white/50 text-center w-full mt-4">No dishes found.</p>
+    </section>
+
+    <!-- Customer Review Section -->
+    <section id="reviews-section" class="w-full max-w-md mx-auto py-10 fade-in-down" style="animation-delay: 1.2s;">
+        <h2 class="text-white text-4xl font-great-vibes text-center mb-8 px-4 section-title" data-translate-key="review_title">What Our Clients Say</h2>
+        <div class="flex flex-col space-y-4">
+            <!-- First Row of Reviews -->
+            <div class="flex space-x-4 overflow-x-auto pb-4 no-scrollbar -mx-4 px-4">
+                <!-- Review Card 1 -->
+                <div class="testimonial-card p-4 flex items-center space-x-4 flex-shrink-0 w-[90%] sm:w-80">
+                    <!-- Avatar -->
+                    <div class="flex-shrink-0 w-16 h-16 rounded-full border-2 border-amber-400/50 bg-black/50 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500/60" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <!-- Content -->
+                    <div class="flex-grow">
+                        <div class="flex items-center space-x-0.5 mb-2">
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                        </div>
+                        <p class="font-great-vibes text-xl text-white/90 mb-2 leading-tight" data-translate-key="review_quote_1">
+                            "An absolutely unforgettable culinary experience!"
+                        </p>
+                        <div>
+                            <p class="font-semibold text-sm text-red-500" style="text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);" data-translate-key="review_author_name_1">- Priya Sharma</p>
+                            <p class="text-xs text-yellow-400 font-medium" data-translate-key="review_author_designation_1">Wedding Client</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 2 -->
+                <div class="testimonial-card p-4 flex items-center space-x-4 flex-shrink-0 w-[90%] sm:w-80">
+                    <!-- Avatar -->
+                    <div class="flex-shrink-0 w-16 h-16 rounded-full border-2 border-amber-400/50 bg-black/50 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500/60" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <!-- Content -->
+                    <div class="flex-grow">
+                        <div class="flex items-center space-x-0.5 mb-2">
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                        </div>
+                        <p class="font-great-vibes text-xl text-white/90 mb-2 leading-tight" data-translate-key="review_quote_2">
+                            "The food for our corporate event was simply divine."
+                        </p>
+                        <div>
+                            <p class="font-semibold text-sm text-red-500" style="text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);" data-translate-key="review_author_name_2">- Sameer Verma</p>
+                            <p class="text-xs text-yellow-400 font-medium" data-translate-key="review_author_designation_2">Corporate Event</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 3 -->
+                <div class="testimonial-card p-4 flex items-center space-x-4 flex-shrink-0 w-[90%] sm:w-80">
+                    <!-- Avatar -->
+                    <div class="flex-shrink-0 w-16 h-16 rounded-full border-2 border-amber-400/50 bg-black/50 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500/60" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <!-- Content -->
+                    <div class="flex-grow">
+                        <div class="flex items-center space-x-0.5 mb-2">
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                        </div>
+                        <p class="font-great-vibes text-xl text-white/90 mb-2 leading-tight" data-translate-key="review_quote_3">
+                            "Best catering for my daughter's birthday party!"
+                        </p>
+                        <div>
+                            <p class="font-semibold text-sm text-red-500" style="text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);" data-translate-key="review_author_name_3">- Anjali Singh</p>
+                            <p class="text-xs text-yellow-400 font-medium" data-translate-key="review_author_designation_3">Birthday Party</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Row of Reviews -->
+            <div class="flex space-x-4 overflow-x-auto pb-4 no-scrollbar -mx-4 px-4">
+                <!-- Review Card 4 -->
+                <div class="testimonial-card p-4 flex items-center space-x-4 flex-shrink-0 w-[90%] sm:w-80">
+                    <!-- Avatar -->
+                    <div class="flex-shrink-0 w-16 h-16 rounded-full border-2 border-amber-400/50 bg-black/50 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500/60" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <!-- Content -->
+                    <div class="flex-grow">
+                        <div class="flex items-center space-x-0.5 mb-2">
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                        </div>
+                        <p class="font-great-vibes text-xl text-white/90 mb-2 leading-tight" data-translate-key="review_quote_4">
+                            "Impeccable service and delicious food. Highly recommended!"
+                        </p>
+                        <div>
+                            <p class="font-semibold text-sm text-red-500" style="text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);" data-translate-key="review_author_name_4">- Rohan Mehta</p>
+                            <p class="text-xs text-yellow-400 font-medium" data-translate-key="review_author_designation_4">Birthday Party</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 5 -->
+                <div class="testimonial-card p-4 flex items-center space-x-4 flex-shrink-0 w-[90%] sm:w-80">
+                    <!-- Avatar -->
+                    <div class="flex-shrink-0 w-16 h-16 rounded-full border-2 border-amber-400/50 bg-black/50 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500/60" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <!-- Content -->
+                    <div class="flex-grow">
+                        <div class="flex items-center space-x-0.5 mb-2">
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                        </div>
+                        <p class="font-great-vibes text-xl text-white/90 mb-2 leading-tight" data-translate-key="review_quote_5">
+                            "They made our get-together special. Every dish was a hit."
+                        </p>
+                        <div>
+                            <p class="font-semibold text-sm text-red-500" style="text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);" data-translate-key="review_author_name_5">- Aisha Khan</p>
+                            <p class="text-xs text-yellow-400 font-medium" data-translate-key="review_author_designation_5">Get-Together</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Card 6 -->
+                <div class="testimonial-card p-4 flex items-center space-x-4 flex-shrink-0 w-[90%] sm:w-80">
+                    <!-- Avatar -->
+                    <div class="flex-shrink-0 w-16 h-16 rounded-full border-2 border-amber-400/50 bg-black/50 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500/60" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <!-- Content -->
+                    <div class="flex-grow">
+                        <div class="flex items-center space-x-0.5 mb-2">
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                            <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                        </div>
+                        <p class="font-great-vibes text-xl text-white/90 mb-2 leading-tight" data-translate-key="review_quote_6">
+                            "Truly professional and the taste was authentic. 5 stars!"
+                        </p>
+                        <div>
+                            <p class="font-semibold text-sm text-red-500" style="text-shadow: 0 0 8px rgba(239, 68, 68, 0.5);" data-translate-key="review_author_name_6">- Vikram Rathod</p>
+                            <p class="text-xs text-yellow-400 font-medium" data-translate-key="review_author_designation_6">Reception Client</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-md mx-auto py-6 px-4 text-center text-white/40 fade-in-down" style="animation-delay: 1.2s;">
+        <div class="flex justify-center items-center space-x-4 mb-4">
+            <a href="#" class="hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+            </a>
+            <a href="#" class="hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            </a>
+            <!-- WhatsApp Icon -->
+            <a href="https://wa.me/911234567890" target="_blank" class="hover:text-white transition-colors">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            </a>
+            <!-- Calling Icon -->
+            <a href="tel:+911234567890" class="hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+            </a>
+        </div>
+        <p class="text-xs">© 2025 Sarvadnya Caterers. All Rights Reserved.</p>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- PRELOADER SCRIPT ---
+            const preloader = document.getElementById('preloader');
+            window.addEventListener('load', () => {
+                // This ensures the preloader is shown for a minimum amount of time
+                // so the animation is visible on fast connections, then it fades out.
+                setTimeout(() => {
+                    preloader.classList.add('hidden');
+                }, 1500); 
+            });
+
+            // --- SMOKE ANIMATION SCRIPT ---
+            const smokeContainers = document.querySelectorAll('.smoke-container');
+            const animations = ['smoke-rise-straight', 'smoke-rise-swirl-left', 'smoke-rise-swirl-right'];
+            const particleCount = 60;
+            smokeContainers.forEach(container => {
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('span');
+                    particle.classList.add('smoke-particle');
+                    const size = Math.random() * 30 + 10;
+                    const startX = Math.random() * 80 + 10;
+                    const duration = Math.random() * 8 + 5;
+                    const delay = Math.random() * 5;
+                    const blur = Math.random() * 5 + 2;
+                    const animationName = animations[Math.floor(Math.random() * animations.length)];
+                    const zIndex = Math.random() > 0.5 ? 1 : -1;
+                    particle.style.width = `${size}px`;
+                    particle.style.height = `${size}px`;
+                    particle.style.left = `${startX}%`;
+                    particle.style.animationName = animationName;
+                    particle.style.animationDuration = `${duration}s`;
+                    particle.style.animationDelay = `${delay}s`;
+                    particle.style.filter = `blur(${blur}px)`;
+                    particle.style.zIndex = zIndex;
+                    container.appendChild(particle);
+                }
+            });
+
+            // --- LANGUAGE AND SEARCH SCRIPT ---
+            const translations = {
+                en: {
+                    preloader_subtitle: 'Crafting Unforgettable Experiences',
+                    todays_specials: "Today's Specials",
+                    occasion_special: 'Occasion Special',
+                    chefs_recommendations: "Chef's Recommendations",
+                    our_dishes: 'Our Dishes',
+                    wedding_name: 'Wedding Special', ceremony_name: 'Ceremony Special', birthday_name: 'Birthday Special',
+                    gettogether_name: 'Get-Together', haldi_name: 'Haldi Special', reception_name: 'Reception',
+                    occasion_subtitle: 'Occasion Special', view_details_btn: 'View Details',
+                    kebab_platter: 'Kebab Platter', spicy_samosa: 'Spicy Samosa', special_thali: 'Special Thali', mango_lassi: 'Mango Lassi', gulab_jamun: 'Gulab Jamun',
+                    manchow_soup: 'Manchow Soup', rice_kheer: 'Rice Kheer', mix_veg_pakora: 'Mix Veg Pakora', masala_dosa: 'Masala Dosa', kesar_pista: 'Kesar Pista',
+                    review_title: 'What Our Clients Say',
+                    review_quote_1: '"An absolutely unforgettable culinary experience!"',
+                    review_author_name_1: '- Priya Sharma',
+                    review_author_designation_1: 'Wedding Client',
+                    review_quote_2: '"The food for our corporate event was simply divine."',
+                    review_author_name_2: '- Sameer Verma',
+                    review_author_designation_2: 'Corporate Event',
+                    review_quote_3: '"Best catering for my daughter\'s birthday party!"',
+                    review_author_name_3: '- Anjali Singh',
+                    review_author_designation_3: 'Birthday Party',
+                    review_quote_4: '"Impeccable service and delicious food. Highly recommended!"',
+                    review_author_name_4: '- Rohan Mehta',
+                    review_author_designation_4: 'Birthday Party',
+                    review_quote_5: '"They made our get-together special. Every dish was a hit."',
+                    review_author_name_5: '- Aisha Khan',
+                    review_author_designation_5: 'Get-Together',
+                    review_quote_6: '"Truly professional and the taste was authentic. 5 stars!"',
+                    review_author_name_6: '- Vikram Rathod',
+                    review_author_designation_6: 'Reception Client'
+                },
+                hi: {
+                    preloader_subtitle: ' अविस्मरणीय अनुभव तैयार करना',
+                    todays_specials: 'आज के विशेष',
+                    occasion_special: 'अवसर विशेष',
+                    chefs_recommendations: 'शेफ की सिफारिशें',
+                    our_dishes: 'हमारे व्यंजन',
+                    wedding_name: 'शादी विशेष', ceremony_name: 'समारोह विशेष', birthday_name: 'जन्मदिन विशेष',
+                    gettogether_name: 'गेट-टुगेदर', haldi_name: 'हल्दी विशेष', reception_name: 'रिसेप्शन',
+                    occasion_subtitle: 'अवसर विशेष', view_details_btn: 'विवरण देखें',
+                    kebab_platter: 'कबाब प्लेटर', spicy_samosa: 'मसालेदार समोसा', special_thali: 'विशेष थाली', mango_lassi: 'मैंगो लस्सी', gulab_jamun: 'गुलाब जामुन',
+                    manchow_soup: 'मनचाउ सूप', rice_kheer: 'चावल की खीर', mix_veg_pakora: 'मिक्स वेज पकोड़ा', masala_dosa: 'मसाला डोसा', kesar_pista: 'केसर पिस्ता',
+                    review_title: 'हमारे ग्राहक क्या कहते हैं',
+                    review_quote_1: '"एक बिल्कुल अविस्मरणीय पाक अनुभव!"',
+                    review_author_name_1: '- प्रिया शर्मा',
+                    review_author_designation_1: 'वेडिंग क्लाइंट',
+                    review_quote_2: '"हमारे कॉर्पोरेट कार्यक्रम के लिए भोजन बस दिव्य था।"',
+                    review_author_name_2: '- समीर वर्मा',
+                    review_author_designation_2: 'कॉर्पोरेट कार्यक्रम',
+                    review_quote_3: '"मेरी बेटी की जन्मदिन की पार्टी के लिए सर्वश्रेष्ठ खानपान!"',
+                    review_author_name_3: '- अंजलि सिंह',
+                    review_author_designation_3: 'जन्मदिन की पार्टी',
+                    review_quote_4: '"त्रुटिहीन सेवा और स्वादिष्ट भोजन। अत्यधिक अनुशंसित!"',
+                    review_author_name_4: '- रोहन मेहता',
+                    review_author_designation_4: 'जन्मदिन की पार्टी',
+                    review_quote_5: '"उन्होंने हमारे गेट-टुगेदर को खास बना दिया। हर व्यंजन हिट था।"',
+                    review_author_name_5: '- आयशा खान',
+                    review_author_designation_5: 'गेट-टुगेदर',
+                    review_quote_6: '"वास्तव में पेशेवर और स्वाद प्रामाणिक था। 5 सितारे!"',
+                    review_author_name_6: '- विक्रम राठौड़',
+                    review_author_designation_6: 'रिसेप्शन क्लाइंट'
+                },
+                mr: {
+                    preloader_subtitle: 'अविस्मरणीय अनुभव तयार करणे',
+                    todays_specials: 'आजचे विशेष',
+                    occasion_special: 'प्रसंग विशेष',
+                    chefs_recommendations: 'शेफच्या शिफारसी',
+                    our_dishes: 'आमचे पदार्थ',
+                    wedding_name: 'लग्न विशेष', ceremony_name: 'समारंभ विशेष', birthday_name: 'वाढदिवस विशेष',
+                    gettogether_name: 'गेट-टुगेदर', haldi_name: 'हळद विशेष', reception_name: 'रिसेप्शन',
+                    occasion_subtitle: 'प्रसंग विशेष', view_details_btn: 'तपशील पहा',
+                    kebab_platter: 'कबाब प्लॅटर', spicy_samosa: 'मसालेदार सामोसा', special_thali: 'विशेष थाळी', mango_lassi: 'मँगो लस्सी', gulab_jamun: 'गुलाब जामुन',
+                    manchow_soup: 'मनचाऊ सूप', rice_kheer: 'तांदळाची खीर', mix_veg_pakora: 'मिक्स व्हेज पकोडा', masala_dosa: 'मसाला डोसा', kesar_pista: 'केशर पिस्ता',
+                    review_title: 'आमचे ग्राहक काय म्हणतात',
+                    review_quote_1: '"एक अविस्मरणीय स्वयंपाकाचा अनुभव!"',
+                    review_author_name_1: '- प्रिया शर्मा',
+                    review_author_designation_1: 'वेडिंग क्लायंट',
+                    review_quote_2: '"आमच्या कॉर्पोरेट कार्यक्रमासाठी जेवण फक्त दैवी होते."',
+                    review_author_name_2: '- समीर वर्मा',
+                    review_author_designation_2: 'कॉर्पोरेट कार्यक्रम',
+                    review_quote_3: '"माझ्या मुलीच्या वाढदिवसाच्या पार्टीसाठी सर्वोत्तम केटरिंग!"',
+                    review_author_name_3: '- अंजली सिंग',
+                    review_author_designation_3: 'वाढदिवसाची पार्टी',
+                    review_quote_4: '"उत्तम सेवा आणि स्वादिष्ट जेवण. अत्यंत शिफारसीय!"',
+                    review_author_name_4: '- रोहन मेहता',
+                    review_author_designation_4: 'वाढदिवसाची पार्टी',
+                    review_quote_5: '"त्यांनी आमचे गेट-टुगेदर खास बनवले. प्रत्येक डिश हिट होती."',
+                    review_author_name_5: '- आयशा खान',
+                    review_author_designation_5: 'गेट-टुगेदर',
+                    review_quote_6: '"खरोखर व्यावसायिक आणि चव अस्सल होती. 5 तारे!"',
+                    review_author_name_6: '- विक्रम राठोड',
+                    review_author_designation_6: 'रिसेप्शन क्लायंट'
+                }
+            };
+
+            const langToggleButton = document.getElementById('lang-toggle');
+            const langDropdown = document.getElementById('lang-dropdown');
+            const currentLangSpan = document.getElementById('current-lang');
+            const langOptions = document.querySelectorAll('.lang-option');
+            const searchInput = document.getElementById('search-input');
+            const sections = document.querySelectorAll('section[id]');
+
+            function changeLanguage(lang) {
+                if (!translations[lang]) return;
+                
+                document.querySelectorAll('[data-translate-key]').forEach(el => {
+                    const key = el.getAttribute('data-translate-key');
+                    if (translations[lang][key]) {
+                        el.textContent = translations[lang][key];
+                    }
+                });
+
+                currentLangSpan.textContent = lang.toUpperCase();
+                hideDropdown();
+                // Trigger search filter after language change to update visibility based on new text
+                filterContent();
+            }
+
+            function showDropdown() {
+                langDropdown.classList.remove('hidden');
+                setTimeout(() => {
+                   langDropdown.classList.remove('opacity-0', 'scale-95');
+                }, 10);
+            }
+
+            function hideDropdown() {
+                langDropdown.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    langDropdown.classList.add('hidden');
+                }, 300);
+            }
+            
+            langToggleButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (langDropdown.classList.contains('hidden')) {
+                    showDropdown();
+                } else {
+                    hideDropdown();
+                }
+            });
+
+            langOptions.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    changeLanguage(e.target.dataset.lang);
+                });
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!langDropdown.contains(e.target) && !langToggleButton.contains(e.target)) {
+                    hideDropdown();
+                }
+            });
+
+            function filterContent() {
+                const query = searchInput.value.toLowerCase();
+
+                sections.forEach(section => {
+                    const items = section.querySelectorAll('.filterable-item');
+                    const noResultsMessage = section.querySelector('.no-results');
+                    let visibleCount = 0;
+
+                    items.forEach(item => {
+                        const itemText = item.textContent.toLowerCase();
+                        if (itemText.includes(query)) {
+                            item.classList.remove('hidden');
+                            visibleCount++;
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+
+                    if (noResultsMessage) {
+                       if (visibleCount === 0) {
+                           noResultsMessage.classList.remove('hidden');
+                       } else {
+                           noResultsMessage.classList.add('hidden');
+                       }
+                    }
+                });
+            }
+
+            searchInput.addEventListener('input', filterContent);
+
+            // Set default language and initial filter on load
+            changeLanguage('en');
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
