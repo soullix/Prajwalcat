@@ -3,89 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sarvadnya Caterers - A Culinary Experience</title>
+    <meta name="description" content="Sarvadnya Caterers - Premium catering services for weddings, birthdays, corporate events, and special occasions">
+    <meta name="keywords" content="catering, wedding catering, event catering, corporate catering, birthday catering">
+    <meta name="author" content="Sarvadnya Caterers">
+    <title>Sarvadnya Caterers - Premium Event Catering Services</title>
     
-    <!-- Favicon / Logo in Title -->
     <link rel="icon" type="image/png" href="./logob.png">
-    
-    <!-- Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Great Vibes for titles, Poppins for body text --><link rel="preconnect" href="https://fonts.googleapis.com">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        /* Custom CSS for impressive UI/UX effects and animations */
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
         body {
-            /* Dark Black Background */
-            background-color: #000000; 
+            background-color: #000000;
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
-            padding-top: 70px; /* Space for the floating navbar */
+            padding-top: 70px;
+            color: #ffffff;
         }
 
-        /* --- PRELOADER STYLES START --- */
-        #preloader {
-            transition: opacity 0.7s ease-out, visibility 0.7s ease-out;
-        }
-        #preloader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-        .loader-dots .dot {
-            animation: bounce 1.4s infinite ease-in-out both;
-        }
+        .font-great-vibes { font-family: 'Great Vibes', cursive; }
+
+        #preloader { transition: opacity 0.7s ease-out, visibility 0.7s ease-out; }
+        #preloader.hidden { opacity: 0; visibility: hidden; }
+        
+        .loader-dots .dot { animation: bounce 1.4s infinite ease-in-out both; }
+        
         @keyframes bounce {
             0%, 80%, 100% { transform: scale(0); }
             40% { transform: scale(1.0); }
         }
-        /* --- PRELOADER STYLES END --- */
 
-        .font-great-vibes {
-            font-family: 'Great Vibes', cursive;
-        }
-
-        /* The 3D "Thali" (plate) effect container */
         .thali-border {
-            padding: 8px; /* Space between image and border edge */
+            padding: 8px;
             background: radial-gradient(circle, #e0e0e0, #a0a0a0, #606060);
-            box-shadow:
-                inset 0px 5px 15px rgba(0, 0, 0, 0.7),
-                inset 0px -2px 3px rgba(255, 255, 255, 0.3); /* Removed outer glow */
+            box-shadow: inset 0px 5px 15px rgba(0, 0, 0, 0.7), inset 0px -2px 3px rgba(255, 255, 255, 0.3);
         }
 
-        /* 3D Plate effect for hero section items */
         .plate-effect {
+            padding: 6px;
             background: radial-gradient(circle, #d4d4d4, #a3a3a3, #737373);
-            box-shadow:
-                inset 0px 3px 4px rgba(255, 255, 255, 0.5),
-                inset 0px -8px 15px rgba(0, 0, 0, 0.6); /* Removed outer glow */
-            padding: 6px; /* Increased padding for a thicker border */
+            box-shadow: inset 0px 3px 4px rgba(255, 255, 255, 0.5), inset 0px -8px 15px rgba(0, 0, 0, 0.6);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .special-item:hover .plate-effect {
             transform: translateY(-5px) scale(1.05) rotateZ(-2deg);
-            box-shadow:
-                inset 0px 3px 4px rgba(255, 255, 255, 0.5),
-                inset 0px -8px 15px rgba(0, 0, 0, 0.6); /* Removed outer glow */
         }
 
-        /* Hide scrollbar utility */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* Impressive Section Title Style */
         .section-title {
-            text-shadow: 0 0 15px rgba(251, 191, 36, 0.5); /* Subtle Gold Glow */
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.5);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem; /* 12px */
+            gap: 0.75rem;
         }
+        
         .section-title::before,
         .section-title::after {
             content: '';
@@ -99,22 +80,19 @@
             background-position: center;
         }
 
-        .section-title::after {
-            transform: scaleX(-1);
-        }
+        .section-title::after { transform: scaleX(-1); }
 
-        /* Scroll-triggered Animation */
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
+        
         .animate-on-scroll.is-visible {
             opacity: 1;
             transform: translateY(0);
         }
         
-        /* --- Search Feature Styles --- */
         @keyframes rotate-clockwise {
             from { transform: scale(0.5) rotate(0deg); }
             to { transform: scale(1) rotate(360deg); }
@@ -126,13 +104,10 @@
             100% { transform: translateY(-90px) scale(2.2); opacity: 0; }
         }
 
-        .dish-spotlight {
-            animation: rotate-clockwise 2.5s ease-out;
-        }
-        
+        .dish-spotlight { animation: rotate-clockwise 2.5s ease-out; }
         .dish-spotlight .plate-effect {
             position: relative;
-            box-shadow: 0 0 60px 20px rgba(251, 191, 36, 0.2); /* Premium Gold Glow */
+            box-shadow: 0 0 60px 20px rgba(251, 191, 36, 0.2);
         }
         
         .dish-spotlight .steam {
@@ -144,7 +119,6 @@
             animation: steam-rise 4s infinite ease-out;
         }
         
-        /* --- NEW REVIEW CARD STYLES START --- */
         .testimonial-card {
             background: radial-gradient(circle, #2a2a2a, #1a1a1a);
             border: 12px solid;
@@ -162,9 +136,7 @@
             text-align: center;
         }
         
-        .testimonial-card::before {
-            content: none; 
-        }
+        .testimonial-card::before { content: none; }
 
         .avatar-container {
             flex-shrink: 0;
@@ -190,9 +162,8 @@
             height: 16px;
             transition: transform 0.3s ease;
         }
-        .star-rating .star-3d:hover {
-            transform: scale(1.2);
-        }
+        
+        .star-rating .star-3d:hover { transform: scale(1.2); }
 
         .quote-text {
             font-family: 'Great Vibes', cursive;
@@ -204,81 +175,70 @@
         .author-name {
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
-            color: #ef4444; /* red-500 */
+            color: #ef4444;
             font-size: 0.8rem;
         }
 
         .author-designation {
-            color: #fbbd23; /* gold/yellow */
+            color: #fbbd23;
             font-size: 0.7rem;
         }
-
-        /* --- REVIEW CARD STYLES END --- */
         
-        /* --- DISH CATEGORY ENHANCEMENTS --- */
         #dish-categories {
             -webkit-mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
             mask-image: linear-gradient(to right, transparent 0%, black 5%, black 95%, transparent 100%);
-            padding-bottom: 1rem; /* Add padding for the glow effect */
+            padding-bottom: 1rem;
         }
+        
         .dish-category-tab {
             transition: all 0.3s ease-in-out;
             border: 2px solid rgba(251, 191, 36, 0.2);
             background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
-            border-radius: 0.75rem; /* 12px */
+            border-radius: 0.75rem;
             box-shadow: 0 4px 10px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.05);
             color: #fff;
         }
+        
         .dish-category-tab:hover:not(.active) {
             transform: translateY(-4px);
             background: linear-gradient(145deg, #2a2a2a, #3a3a3a);
             border-color: rgba(251, 191, 36, 0.5);
         }
+        
         .dish-category-tab.active {
             color: #ffffff;
-            border-color: #FBBF24; /* amber-400 */
+            border-color: #FBBF24;
             transform: translateY(-4px) scale(1.05);
-            background: linear-gradient(to top, #ef4444, #d97706); /* Red-gold gradient */
+            background: linear-gradient(to top, #ef4444, #d97706);
             box-shadow: 0 0 25px rgba(251, 191, 36, 0.5), 0 5px 15px rgba(0,0,0,0.6);
         }
         
-        /* --- DISH ITEM ANIMATION --- */
         .dish-item {
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 0.4s ease-out, transform 0.4s ease-out;
         }
 
-        /* --- MODAL STYLES --- */
-        #modal-backdrop {
-            transition: opacity 0.3s ease-in-out;
-        }
+        #modal-backdrop { transition: opacity 0.3s ease-in-out; }
+        
         #modal-panel {
             transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8); /* Darker, non-glowing shadow */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
         }
 
-        /* --- FLOATING ACTION BUTTON --- */
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
-            }
-            70% {
-                transform: scale(1.05);
-                box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
-            }
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
+        
         #fab {
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             animation: pulse 2.5s infinite;
         }
+        
         #fab:hover {
-            animation-play-state: paused; /* Pause the pulse on hover */
+            animation-play-state: paused;
             transform: scale(1.1);
         }
     </style>
@@ -397,12 +357,118 @@
         </section>
 
         <!-- Customer Reviews Section --><section id="reviews-section" class="animate-on-scroll relative pt-16" style="--delay: 600ms;">
-            <h2 class="text-white text-4xl md:text-5xl font-great-vibes text-center section-title absolute w-full top-4 left-0 z-10" data-translate-key="review_title">What Our Clients Say</h2>
-            <div class="space-y-8 pt-24 relative z-20">
-                <div id="reviews-row-1" class="flex gap-8 overflow-x-auto pb-10 -mx-4 px-4 no-scrollbar">
+            <div class="flex justify-between items-center mb-4 px-4">
+                <h2 class="text-white text-4xl md:text-5xl font-great-vibes text-center section-title flex-grow" data-translate-key="review_title">What Our Clients Say</h2>
+                <span id="review-count" class="text-amber-400 text-sm font-semibold bg-amber-500/20 px-4 py-2 rounded-full"></span>
+            </div>
+            <div class="space-y-8 pt-4 relative z-20">
+                <div id="reviews-row-1" class="flex gap-8 overflow-x-auto pb-10 -mx-4 px-4 no-scrollbar scroll-smooth">
                     <!-- Review cards are added from JS --></div>
-                <div id="reviews-row-2" class="flex gap-8 overflow-x-auto pb-10 -mx-4 px-4 no-scrollbar">
+                <div id="reviews-row-2" class="flex gap-8 overflow-x-auto pb-10 -mx-4 px-4 no-scrollbar scroll-smooth">
                     <!-- Review cards are added from JS --></div>
+            </div>
+        </section>
+
+        <!-- Add Your Review Section -->
+        <section id="add-review-section" class="animate-on-scroll relative pt-16 pb-8" style="--delay: 700ms;">
+            <h2 class="text-white text-4xl md:text-5xl font-great-vibes text-center section-title mb-12">Share Your Experience</h2>
+            
+            <div class="max-w-2xl mx-auto bg-gray-900/50 backdrop-blur-sm rounded-3xl p-6 md:p-8 border border-white/10 shadow-xl shadow-black/30">
+                <form id="review-form" class="space-y-6">
+                    <!-- Star Rating -->
+                    <div class="text-center">
+                        <label class="block text-white/80 text-sm font-semibold mb-3">Rate Your Experience</label>
+                        <div id="star-rating-input" class="flex justify-center items-center space-x-2">
+                            <button type="button" class="star-btn text-4xl transition-all duration-200 hover:scale-110" data-rating="1">
+                                <svg class="w-10 h-10 inline-block star-icon" fill="currentColor" viewBox="0 0 51 48">
+                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="star-btn text-4xl transition-all duration-200 hover:scale-110" data-rating="2">
+                                <svg class="w-10 h-10 inline-block star-icon" fill="currentColor" viewBox="0 0 51 48">
+                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="star-btn text-4xl transition-all duration-200 hover:scale-110" data-rating="3">
+                                <svg class="w-10 h-10 inline-block star-icon" fill="currentColor" viewBox="0 0 51 48">
+                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="star-btn text-4xl transition-all duration-200 hover:scale-110" data-rating="4">
+                                <svg class="w-10 h-10 inline-block star-icon" fill="currentColor" viewBox="0 0 51 48">
+                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
+                                </svg>
+                            </button>
+                            <button type="button" class="star-btn text-4xl transition-all duration-200 hover:scale-110" data-rating="5">
+                                <svg class="w-10 h-10 inline-block star-icon" fill="currentColor" viewBox="0 0 51 48">
+                                    <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <input type="hidden" id="rating-value" name="rating" required>
+                        <p id="rating-error" class="text-red-400 text-xs mt-2 hidden">Please select a rating</p>
+                    </div>
+
+                    <!-- Name Input -->
+                    <div>
+                        <label for="reviewer-name" class="block text-white/80 text-sm font-semibold mb-2">Your Name</label>
+                        <input 
+                            type="text" 
+                            id="reviewer-name" 
+                            name="name"
+                            required
+                            maxlength="50"
+                            class="w-full bg-black/30 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20 transition-all"
+                            placeholder="Enter your name">
+                    </div>
+
+                    <!-- Role/Occasion Input -->
+                    <div>
+                        <label for="reviewer-role" class="block text-white/80 text-sm font-semibold mb-2">Occasion/Event</label>
+                        <input 
+                            type="text" 
+                            id="reviewer-role" 
+                            name="role"
+                            required
+                            maxlength="50"
+                            class="w-full bg-black/30 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20 transition-all"
+                            placeholder="e.g., Wedding Client, Birthday Party, Reception">
+                    </div>
+
+                    <!-- Review Text -->
+                    <div>
+                        <label for="review-text" class="block text-white/80 text-sm font-semibold mb-2">Your Review</label>
+                        <textarea 
+                            id="review-text" 
+                            name="review"
+                            required
+                            maxlength="500"
+                            rows="4"
+                            class="w-full bg-black/30 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-amber-400/50 focus:ring-2 focus:ring-amber-400/20 transition-all resize-none"
+                            placeholder="Share your experience with us..."></textarea>
+                        <p class="text-white/40 text-xs mt-1 text-right"><span id="char-count">0</span>/500</p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button 
+                        type="submit" 
+                        id="submit-review-btn"
+                        class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg shadow-amber-500/30 flex items-center justify-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/>
+                        </svg>
+                        <span>Submit Review</span>
+                    </button>
+
+                    <!-- Success Message -->
+                    <div id="review-success" class="hidden bg-green-500/20 border border-green-500/50 rounded-xl p-4 text-center">
+                        <svg class="w-12 h-12 mx-auto mb-2 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-green-400 font-semibold">Thank you for your review!</p>
+                        <p class="text-white/60 text-sm mt-1">Your feedback helps us serve you better.</p>
+                    </div>
+                </form>
             </div>
         </section>
 
@@ -441,55 +507,80 @@
         <span data-translate-key="book_now">Book Now</span>
     </a>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+    
+    <script>
+    // Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCzL9-SQ4S_MYd2X-Cnlp9jffO3714U2s4",
+        authDomain: "prajwalcat.firebaseapp.com",
+        projectId: "prajwalcat",
+        storageBucket: "prajwalcat.firebasestorage.app",
+        messagingSenderId: "970111568589",
+        appId: "1:970111568589:web:65fa28b957e12bcccd7784",
+        measurementId: "G-60V3XB55L9"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const analytics = firebase.analytics();
+    
+    console.log('Firebase initialized successfully!');
+    </script>
+
     <script>
         // Data for dynamic content generation
         const contentData = {
             specials: [
-                { id: 'shrikhand', nameKey: 'shrikhand', img: 'Shrikhand' },
-                { id: 'basundi', nameKey: 'basundi', img: 'Basundi' },
-                { id: 'paneer_butter', nameKey: 'paneer_butter_masala', img: 'Paneer+Butter+Masala' },
-                { id: 'matar_paneer', nameKey: 'matar_paneer', img: 'Matar+Paneer' },
-                { id: 'kaju_curry', nameKey: 'kaju_curry', img: 'Kaju+Curry' },
+                { id: 'shrikhand', nameKey: 'shrikhand', img: './img/shrikhand.jpg' },
+                { id: 'basundi', nameKey: 'basundi', img: './img/Basundi.jpg' },
+                { id: 'paneer_butter', nameKey: 'paneer_butter_masala', img: './img/paneer butter masala.jpg' },
+                { id: 'matar_paneer', nameKey: 'matar_paneer', img: './img/matar-paneer.jpg' },
+                { id: 'kaju_curry', nameKey: 'kaju_curry', img: './img/kaju curry.jpg' },
             ],
             occasions: [
-                { id: 'wedding', nameKey: 'wedding_name', img: 'Wedding+Feast' },
-                { id: 'ceremony', nameKey: 'ceremony_name', img: 'Ring+Ceremony' },
-                { id: 'birthday', nameKey: 'birthday_name', img: 'Birthday+Party' },
-                { id: 'gettogether', nameKey: 'gettogether_name', img: 'Family+Party' },
-                { id: 'haldi', nameKey: 'haldi_name', img: 'Haldi+Function' },
-                { id: 'reception', nameKey: 'reception_name', img: 'Grand+Reception' },
+                { id: 'wedding', nameKey: 'wedding_name', img: './img/weeding special.jpg' },
+                { id: 'ceremony', nameKey: 'ceremony_name', img: './img/cermony.jpg' },
+                { id: 'birthday', nameKey: 'birthday_name', img: './img/birthday party.jpg' },
+                { id: 'gettogether', nameKey: 'gettogether_name', img: './img/familygettogether.jpg' },
+                { id: 'haldi', nameKey: 'haldi_name', img: './img/hardi special.jpg' },
+                { id: 'reception', nameKey: 'reception_name', img: './img/recption special.jpg' },
             ],
             recommendations: [
-                { id: 'mix_veg', nameKey: 'mix_veg', img: 'Mix+Veg' },
-                { id: 'aalu_matar', nameKey: 'aalu_matar', img: 'Aalu+Matar' },
-                { id: 'samosa', nameKey: 'samosa', img: 'Samosa' },
-                { id: 'veg_pulao', nameKey: 'veg_pulao', img: 'Veg+Pulao' },
-                { id: 'dosa', nameKey: 'masala_dosa', img: 'Masala+Dosa' },
+                { id: 'mix_veg', nameKey: 'mix_veg', img: './img/mix veg.jpg' },
+                { id: 'aalu_matar', nameKey: 'aalu_matar', img: './img/Punjabi-Aloo-Matar-Recipe.jpg' },
+                { id: 'samosa', nameKey: 'samosa', img: './img/samosa.jpg' },
+                { id: 'veg_pulao', nameKey: 'veg_pulao', img: './img/veg-pulao-featured.jpg' },
+                { id: 'dosa', nameKey: 'masala_dosa', img: './img/masla dosha.jpg' },
             ],
             dishCategories: [
                 { id: 'breads', nameKey: 'cat_breads', icon: '🫓', dishes: [
-                    { nameKey: 'd_gahu_poli', img: 'Poli' }, { nameKey: 'd_jwari_bhakri', img: 'Bhakri' }, { nameKey: 'd_bajri_bhakri', img: 'Bhakri' }
+                    { nameKey: 'd_gahu_poli', img: './img/wheat poli.jpg' }, { nameKey: 'd_jwari_bhakri', img: './img/joear bhakri.jpg' }, { nameKey: 'd_bajri_bhakri', img: './img/bajari bhakar.jpg' }
                 ]},
                 { id: 'rice', nameKey: 'cat_rice', icon: '🍚', dishes: [
-                    { nameKey: 'd_plain_rice', img: 'Rice' }, { nameKey: 'd_varan_bhat', img: 'Varan+Bhat' }, { nameKey: 'd_jeera_rice', img: 'Jeera+Rice' }, { nameKey: 'd_masala_bhat', img: 'Masala+Bhat' }, { nameKey: 'd_dal_khichdi', img: 'Khichdi' }
+                    { nameKey: 'd_plain_rice', img: './img/plain rice.jpg' }, { nameKey: 'd_varan_bhat', img: './img/varan bhat.jpg' }, { nameKey: 'd_jeera_rice', img: './img/jera rice.jpg' }, { nameKey: 'd_masala_bhat', img: './img/masala bhat.jpg' }, { nameKey: 'd_dal_khichdi', img: './img/dal khichede.jpg' }
                 ]},
                 { id: 'curries', nameKey: 'cat_curries', icon: '🥬', dishes: [
-                    { nameKey: 'd_batata_bhaji', img: 'Aloo+Sabzi' }, { nameKey: 'd_cabbage_matar', img: 'Cabbage+Fry' }, { nameKey: 'mix_veg', img: 'Mix+Veg' }, { nameKey: 'aalu_matar', img: 'Aloo+Matar' }, { nameKey: 'd_vangi_batata', img: 'Baingan+Aloo' }, { nameKey: 'paneer_butter_masala', img: 'Paneer+Butter' }, { nameKey: 'kaju_curry', img: 'Kaju+Curry' }, { nameKey: 'd_chana_masala', img: 'Chole' }, { nameKey: 'matar_paneer', img: 'Matar+Paneer' }
+                    { nameKey: 'd_batata_bhaji', img: './img/potato curry.jpg' }, { nameKey: 'd_cabbage_matar', img: './img/cabbage peas curry.jpg' }, { nameKey: 'mix_veg', img: './img/mix veg.jpg' }, { nameKey: 'aalu_matar', img: './img/Punjabi-Aloo-Matar-Recipe.jpg' }, { nameKey: 'd_vangi_batata', img: './img/braingan potato curry.jpg' }, { nameKey: 'paneer_butter_masala', img: './img/paneer butter masala.jpg' }, { nameKey: 'kaju_curry', img: './img/kaju curry.jpg' }, { nameKey: 'd_chana_masala', img: './img/chana masala.jpg' }, { nameKey: 'matar_paneer', img: './img/matar-paneer.jpg' }
                 ]},
                 { id: 'fry_side', nameKey: 'cat_fry_side', icon: '🧆', dishes: [
-                    { nameKey: 'd_papad', img: 'Papad' }, { nameKey: 'd_masala_papad', img: 'Masala+Papad' }, { nameKey: 'd_bhaji', img: 'Bhaji' }, { nameKey: 'd_sev_bhaji', img: 'Sev+Bhaji' }, { nameKey: 'd_khari_boondi', img: 'Boondi' }
+                    { nameKey: 'd_papad', img: './img/papad.jpg' }, { nameKey: 'd_masala_papad', img: './img/masala papad.jpg' }, { nameKey: 'd_bhaji', img: './img/bhaji.jpg' }, { nameKey: 'd_sev_bhaji', img: './img/sev bhaji.jpg' }, { nameKey: 'd_khari_boondi', img: './img/kari bhonda.jpg' }
                 ]},
                 { id: 'snacks', nameKey: 'cat_snacks', icon: '🍠', dishes: [
-                    { nameKey: 'samosa', img: 'Samosa' }, { nameKey: 'd_veg_pakoda', img: 'Pakoda' }, { nameKey: 'd_dahi_vada', img: 'Dahi+Vada' }
+                    { nameKey: 'samosa', img: './img/samosa.jpg' }, { nameKey: 'd_veg_pakoda', img: './img/veg pakoda.jpg' }, { nameKey: 'd_dahi_vada', img: './img/dahi vada.jpg' }
                 ]},
                 { id: 'sweets', nameKey: 'cat_sweets', icon: '🍬', dishes: [
-                    { nameKey: 'shrikhand', img: 'Shrikhand' }, { nameKey: 'd_puranpoli', img: 'Puranpoli' }, { nameKey: 'd_gulabjamun', img: 'Gulabjamun' }, { nameKey: 'basundi', img: 'Basundi' }, { nameKey: 'd_rasgulla', img: 'Rasgulla' }, { nameKey: 'd_balushahi', img: 'Balushahi' }, { nameKey: 'd_jalebi', img: 'Jalebi' }, { nameKey: 'd_gajar_halwa', img: 'Gajar+Halwa' }, { nameKey: 'd_boondi', img: 'Boondi' }, { nameKey: 'd_barfi', img: 'Barfi' }, { nameKey: 'd_motichoor_laddu', img: 'Laddu' }
+                    { nameKey: 'shrikhand', img: './img/shrikhand.jpg' }, { nameKey: 'd_puranpoli', img: './img/puran poli.jpg' }, { nameKey: 'd_gulabjamun', img: './img/gulab jamun.jpg' }, { nameKey: 'basundi', img: './img/Basundi.jpg' }, { nameKey: 'd_rasgulla', img: './img/rasegulla.jpg' }, { nameKey: 'd_balushahi', img: './img/balushahi.jpg' }, { nameKey: 'd_jalebi', img: './img/jalebi.jpg' }, { nameKey: 'd_gajar_halwa', img: './img/gajar halwa.jpg' }, { nameKey: 'd_boondi', img: './img/boondi.jpg' }, { nameKey: 'd_barfi', img: './img/barfi.jpg' }, { nameKey: 'd_motichoor_laddu', img: './img/motichur laddu.jpg' }
                 ]},
                 { id: 'salad', nameKey: 'cat_salad', icon: '🥗', dishes: [
-                    { nameKey: 'd_cucumber_salad', img: 'Salad' }, { nameKey: 'd_carrot_salad', img: 'Salad' }, { nameKey: 'd_sprouts_salad', img: 'Sprouts' }, { nameKey: 'd_dahi_kanda_raita', img: 'Raita' }
+                    { nameKey: 'd_cucumber_salad', img: './img/cuucumber salad.jpg' }, { nameKey: 'd_carrot_salad', img: './img/carrot salad.jpg' }, { nameKey: 'd_sprouts_salad', img: './img/sprout salad.jpg' }, { nameKey: 'd_dahi_kanda_raita', img: './img/onion raita.jpg' }
                 ]},
                 { id: 'drinks', nameKey: 'cat_drinks', icon: '🥛', dishes: [
-                    { nameKey: 'd_taak', img: 'Buttermilk' }, { nameKey: 'd_mattha', img: 'Mattha' }, { nameKey: 'd_limbu_sarbat', img: 'Lemonade' }, { nameKey: 'd_aamras', img: 'Aamras' }
+                    { nameKey: 'd_taak', img: './img/butter milk.jpg' }, { nameKey: 'd_mattha', img: './img/spiced buttermilk.jpg' }, { nameKey: 'd_limbu_sarbat', img: './img/lemonda.jpg' }, { nameKey: 'd_aamras', img: './img/aamrash.jpg' }
                 ]}
             ],
             reviews: [
@@ -623,25 +714,22 @@
                 },
 
                 renderContent() {
-                    const createSpecialItemHTML = (item) => {
-                        const imgSrc = item.id === 'shrikhand' ? './img/shrikhand.jpg' : `https://placehold.co/96x96/2d1b0c/ffebd1?text=${item.img}&font=poppins`;
-                        return `
+                    const createSpecialItemHTML = (item) => `
                         <a href="#" class="relative flex-shrink-0 w-28 text-center group special-item filterable-item" data-item-id="${item.id}">
                             <div class="relative w-24 h-24 mx-auto">
                                 <div class="w-full h-full rounded-full plate-effect">
-                                    <img src="${imgSrc}" alt="${item.nameKey}" class="w-full h-full rounded-full object-cover">
+                                    <img src="${item.img}" alt="${item.nameKey}" class="w-full h-full rounded-full object-cover">
                                 </div>
                             </div>
                             <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="${item.nameKey}">${translations[this.currentLang][item.nameKey]}</span>
                         </a>`;
-                    };
 
                     const createOccasionHTML = (item) => `
                         <div class="relative bg-gradient-to-br from-red-500 to-red-700 rounded-3xl p-4 pt-20 text-center shadow-lg shadow-black/40 flex-shrink-0 w-40 sm:w-48 flex flex-col items-center filterable-item">
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
                                 <div class="relative w-28 h-28">
                                     <div class="thali-border w-full h-full rounded-full">
-                                        <img src="https://placehold.co/128x128/2d1b0c/ffebd1?text=${item.img}&font=poppins" alt="${item.nameKey}" class="w-full h-full object-cover rounded-full">
+                                        <img src="${item.img}" alt="${item.nameKey}" class="w-full h-full object-cover rounded-full">
                                     </div>
                                 </div>
                             </div>
@@ -661,17 +749,13 @@
                             </div>
                             <div class="flex-grow w-full">
                                 <div class="flex items-center space-x-1 mb-2 star-rating">
-                                    <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
-                                    <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
-                                    <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
-                                    <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
-                                    <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                    ${this.createStarRating(item.rating || 5)}
                                 </div>
-                                <p class="quote-text mb-3" data-translate-key="${item.quoteKey}">${translations[this.currentLang][item.quoteKey]}</p>
+                                <p class="quote-text mb-3" data-translate-key="${item.quoteKey}">${item.quote || translations[this.currentLang][item.quoteKey]}</p>
                                 <div class="w-1/2 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto my-2"></div>
                                 <div class="mt-2">
-                                    <p class="author-name" data-translate-key="${item.authorKey}">${translations[this.currentLang][item.authorKey]}</p>
-                                    <p class="author-designation font-semibold tracking-wider" data-translate-key="${item.roleKey}">${translations[this.currentLang][item.roleKey]}</p>
+                                    <p class="author-name" data-translate-key="${item.authorKey}">${item.author || translations[this.currentLang][item.authorKey]}</p>
+                                    <p class="author-designation font-semibold tracking-wider" data-translate-key="${item.roleKey}">${item.role || translations[this.currentLang][item.roleKey]}</p>
                                 </div>
                             </div>
                         </div>`;
@@ -679,8 +763,117 @@
                     document.querySelector('#specials-scroll-container').innerHTML = contentData.specials.map(createSpecialItemHTML).join('');
                     document.querySelector('#occasions-section div.flex').innerHTML = contentData.occasions.map(createOccasionHTML).join('');
                     document.querySelector('#recommendations-section div.flex').innerHTML = contentData.recommendations.map(createSpecialItemHTML).join('');
-                    document.querySelector('#reviews-row-1').innerHTML = contentData.reviews.slice(0,3).map(createReviewHTML).join('');
-                    document.querySelector('#reviews-row-2').innerHTML = contentData.reviews.slice(3,6).map(createReviewHTML).join('');
+                    
+                    // Load reviews from Firebase
+                    this.loadReviews();
+                },
+
+                createStarRating(rating) {
+                    let stars = '';
+                    for (let i = 0; i < 5; i++) {
+                        if (i < rating) {
+                            stars += '<svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>';
+                        } else {
+                            stars += '<svg class="star-3d" style="opacity: 0.3;"><use xlink:href="#star-3d-symbol"/></svg>';
+                        }
+                    }
+                    return stars;
+                },
+
+                async loadReviews() {
+                    try {
+                        // Fetch approved reviews from Firebase (simplified query - no orderBy to avoid index requirement)
+                        const snapshot = await db.collection('reviews')
+                            .where('approved', '==', true)
+                            .get();
+
+                        const firebaseReviews = [];
+                        snapshot.forEach(doc => {
+                            const data = doc.data();
+                            firebaseReviews.push({
+                                quote: `"${data.review}"`,
+                                author: `- ${data.name}`,
+                                role: data.role,
+                                rating: data.rating,
+                                timestamp: data.timestamp
+                            });
+                        });
+
+                        // Sort by timestamp in JavaScript (newest first)
+                        firebaseReviews.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+                        console.log(`Found ${firebaseReviews.length} Firebase reviews:`, firebaseReviews);
+
+                        // Combine Firebase reviews with default reviews
+                        const allReviews = [...firebaseReviews, ...contentData.reviews];
+                        
+                        // Limit to most recent 18 reviews (to keep it manageable)
+                        const displayReviews = allReviews.slice(0, 18);
+                        const totalReviews = allReviews.length;
+                        
+                        // Update review count badge
+                        document.getElementById('review-count').textContent = `${totalReviews} Reviews`;
+                        
+                        // Render reviews
+                        const createReviewHTML = (item) => `
+                            <div class="testimonial-card filterable-item w-[280px] sm:w-[300px] flex-shrink-0">
+                                 <div class="avatar-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500/60" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                     </svg>
+                                </div>
+                                <div class="flex-grow w-full">
+                                    <div class="flex items-center space-x-1 mb-2 star-rating">
+                                        ${this.createStarRating(item.rating || 5)}
+                                    </div>
+                                    <p class="quote-text mb-3">${item.quote || translations[this.currentLang][item.quoteKey]}</p>
+                                    <div class="w-1/2 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto my-2"></div>
+                                    <div class="mt-2">
+                                        <p class="author-name">${item.author || translations[this.currentLang][item.authorKey]}</p>
+                                        <p class="author-designation font-semibold tracking-wider">${item.role || translations[this.currentLang][item.roleKey]}</p>
+                                    </div>
+                                </div>
+                            </div>`;
+
+                        // Split reviews into two rows
+                        const midpoint = Math.ceil(displayReviews.length / 2);
+                        document.querySelector('#reviews-row-1').innerHTML = displayReviews.slice(0, midpoint).map(createReviewHTML).join('');
+                        document.querySelector('#reviews-row-2').innerHTML = displayReviews.slice(midpoint).map(createReviewHTML).join('');
+                        
+                        // Start auto-scroll animation
+                        this.startReviewAutoScroll();
+                        
+                        console.log(`✅ Successfully loaded ${firebaseReviews.length} approved reviews from Firebase (showing ${displayReviews.length})`);
+                    } catch (error) {
+                        console.error('❌ Error loading reviews:', error);
+                        // Fallback to default reviews if Firebase fails
+                        const createReviewHTML = (item) => `
+                            <div class="testimonial-card filterable-item w-[280px] sm:w-[300px] flex-shrink-0">
+                                 <div class="avatar-container">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-amber-500/60" viewBox="0 0 20 20" fill="currentColor">
+                                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                                     </svg>
+                                </div>
+                                <div class="flex-grow w-full">
+                                    <div class="flex items-center space-x-1 mb-2 star-rating">
+                                        <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                        <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                        <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                        <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                        <svg class="star-3d"><use xlink:href="#star-3d-symbol"/></svg>
+                                    </div>
+                                    <p class="quote-text mb-3" data-translate-key="${item.quoteKey}">${translations[this.currentLang][item.quoteKey]}</p>
+                                    <div class="w-1/2 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto my-2"></div>
+                                    <div class="mt-2">
+                                        <p class="author-name" data-translate-key="${item.authorKey}">${translations[this.currentLang][item.authorKey]}</p>
+                                        <p class="author-designation font-semibold tracking-wider" data-translate-key="${item.roleKey}">${translations[this.currentLang][item.roleKey]}</p>
+                                    </div>
+                                </div>
+                            </div>`;
+                        
+                        document.querySelector('#reviews-row-1').innerHTML = contentData.reviews.slice(0,3).map(createReviewHTML).join('');
+                        document.querySelector('#reviews-row-2').innerHTML = contentData.reviews.slice(3,6).map(createReviewHTML).join('');
+                    }
                 },
 
                 changeLanguage(lang) {
@@ -759,7 +952,7 @@
                                     <div class="w-full h-full rounded-full plate-effect">
                                         <div class="steam" style="left: 45%; top: 10%; animation-delay: 0s; width: 8px; height: 30px;"></div>
                                         <div class="steam" style="left: 55%; top: 10%; animation-delay: 1.5s; width: 10px; height: 35px;"></div>
-                                        <img src="https://placehold.co/192x192/2d1b0c/ffebd1?text=${foundDish.img || foundDish.name.replace(' ', '+')}&font=poppins" alt="${foundDish.nameKey}" class="w-full h-full rounded-full object-cover">
+                                        <img src="${foundDish.img}" alt="${foundDish.nameKey}" class="w-full h-full rounded-full object-cover">
                                     </div>
                                 </div>
                                 <span class="text-white text-2xl mt-6 block text-center font-great-vibes">${translations[this.currentLang][foundDish.nameKey] || foundDish.nameKey}</span>
@@ -806,7 +999,7 @@
                             <a href="#" class="relative text-center group">
                                 <div class="relative w-full aspect-square mx-auto">
                                     <div class="w-full h-full rounded-full plate-effect">
-                                        <img src="https://placehold.co/96x96/2d1b0c/ffebd1?text=${item.img.replace(' ','+')}&font=poppins" alt="${translations[this.currentLang][item.nameKey]}" class="w-full h-full rounded-full object-cover">
+                                        <img src="${item.img}" alt="${translations[this.currentLang][item.nameKey]}" class="w-full h-full rounded-full object-cover">
                                     </div>
                                 </div>
                                 <span class="text-white/80 text-sm mt-2 block group-hover:text-white transition-colors" data-translate-key="${item.nameKey}">${translations[this.currentLang][item.nameKey]}</span>
@@ -863,12 +1056,13 @@
                                 <ul class="list-disc list-inside text-white/80 text-sm space-y-1">${items.map(item => `<li>${item}</li>`).join('')}</ul>
                             </div>`;
                         
+                        const occasion = contentData.occasions.find(o=>o.id===occasionId);
                         const occasionName = translations[this.currentLang][details.nameKey];
                         const message = `Hello Sarvadnya Caterers, I'd like to inquire about the ${occasionName} package.`;
                         const whatsappLink = `https://wa.me/917775034821?text=${encodeURIComponent(message)}`;
 
                         contentDiv.innerHTML = `
-                            <img src="https://placehold.co/500x250/2d1b0c/ffebd1?text=${contentData.occasions.find(o=>o.id===occasionId).img.replace('+',' ')}&font=poppins" class="w-full h-48 object-cover rounded-xl mb-4">
+                            <img src="${occasion.img}" alt="${details.nameKey}" class="w-full h-48 object-cover rounded-xl mb-4">
                             <h2 class="text-3xl md:text-4xl font-great-vibes text-white mb-2 section-title" data-translate-key="${details.nameKey}">${translations[this.currentLang][details.nameKey]}</h2>
                             <p class="text-white/70 mb-6" data-translate-key="${details.descKey}">${translations[this.currentLang][details.descKey]}</p>
                             ${menuHTML('modal_starters', details.menu.starters)}
@@ -961,11 +1155,201 @@
                             hideMenu();
                         }
                     });
+                },
+
+                startReviewAutoScroll() {
+                    const row1 = document.querySelector('#reviews-row-1');
+                    const row2 = document.querySelector('#reviews-row-2');
+                    
+                    if (!row1 || !row2) return;
+
+                    let scrollInterval1, scrollInterval2;
+                    let isPaused1 = false, isPaused2 = false;
+
+                    // Auto-scroll row 1 (left to right)
+                    scrollInterval1 = setInterval(() => {
+                        if (!isPaused1 && row1.scrollWidth > row1.clientWidth) {
+                            row1.scrollLeft += 1;
+                            // Reset to start when reaching end
+                            if (row1.scrollLeft >= row1.scrollWidth - row1.clientWidth) {
+                                row1.scrollLeft = 0;
+                            }
+                        }
+                    }, 30);
+
+                    // Auto-scroll row 2 (right to left - reverse)
+                    row2.scrollLeft = row2.scrollWidth; // Start from end
+                    scrollInterval2 = setInterval(() => {
+                        if (!isPaused2 && row2.scrollWidth > row2.clientWidth) {
+                            row2.scrollLeft -= 1;
+                            // Reset to end when reaching start
+                            if (row2.scrollLeft <= 0) {
+                                row2.scrollLeft = row2.scrollWidth;
+                            }
+                        }
+                    }, 30);
+
+                    // Pause on hover
+                    row1.addEventListener('mouseenter', () => isPaused1 = true);
+                    row1.addEventListener('mouseleave', () => isPaused1 = false);
+                    row2.addEventListener('mouseenter', () => isPaused2 = true);
+                    row2.addEventListener('mouseleave', () => isPaused2 = false);
+
+                    // Pause on touch/scroll
+                    let touchTimeout1, touchTimeout2;
+                    row1.addEventListener('touchstart', () => {
+                        isPaused1 = true;
+                        clearTimeout(touchTimeout1);
+                        touchTimeout1 = setTimeout(() => isPaused1 = false, 3000);
+                    });
+                    row2.addEventListener('touchstart', () => {
+                        isPaused2 = true;
+                        clearTimeout(touchTimeout2);
+                        touchTimeout2 = setTimeout(() => isPaused2 = false, 3000);
+                    });
                 }
 
             };
 
             app.init();
+
+            // Review Form Handling
+            const reviewForm = document.getElementById('review-form');
+            const starBtns = document.querySelectorAll('.star-btn');
+            const ratingInput = document.getElementById('rating-value');
+            const ratingError = document.getElementById('rating-error');
+            const reviewText = document.getElementById('review-text');
+            const charCount = document.getElementById('char-count');
+            const submitBtn = document.getElementById('submit-review-btn');
+            const successMsg = document.getElementById('review-success');
+
+            let selectedRating = 0;
+
+            // Star Rating Interaction
+            starBtns.forEach((btn, index) => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    selectedRating = parseInt(btn.dataset.rating);
+                    ratingInput.value = selectedRating;
+                    ratingError.classList.add('hidden');
+                    
+                    // Update star colors
+                    starBtns.forEach((star, i) => {
+                        const starIcon = star.querySelector('.star-icon');
+                        if (i < selectedRating) {
+                            starIcon.style.color = '#D4AF37'; // Gold
+                            star.classList.add('scale-110');
+                        } else {
+                            starIcon.style.color = '#4B5563'; // Gray
+                            star.classList.remove('scale-110');
+                        }
+                    });
+                });
+
+                // Hover effect
+                btn.addEventListener('mouseenter', () => {
+                    const rating = parseInt(btn.dataset.rating);
+                    starBtns.forEach((star, i) => {
+                        const starIcon = star.querySelector('.star-icon');
+                        if (i < rating) {
+                            starIcon.style.color = '#FFDF00'; // Bright gold on hover
+                        }
+                    });
+                });
+
+                btn.addEventListener('mouseleave', () => {
+                    starBtns.forEach((star, i) => {
+                        const starIcon = star.querySelector('.star-icon');
+                        if (i < selectedRating) {
+                            starIcon.style.color = '#D4AF37';
+                        } else {
+                            starIcon.style.color = '#4B5563';
+                        }
+                    });
+                });
+            });
+
+            // Character Counter
+            reviewText.addEventListener('input', () => {
+                charCount.textContent = reviewText.value.length;
+            });
+
+            // Form Submit Handler
+            reviewForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Validate rating
+                if (!selectedRating) {
+                    ratingError.classList.remove('hidden');
+                    document.getElementById('star-rating-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return;
+                }
+
+                // Get form data
+                const formData = {
+                    name: document.getElementById('reviewer-name').value.trim(),
+                    role: document.getElementById('reviewer-role').value.trim(),
+                    review: reviewText.value.trim(),
+                    rating: selectedRating,
+                    timestamp: new Date().toISOString(),
+                    approved: true, // Auto-approve all reviews (no admin approval needed)
+                    status: 'approved'
+                };
+
+                // Disable submit button
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<svg class="animate-spin h-5 w-5 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+
+                try {
+                    // Save review to Firebase Firestore
+                    const docRef = await db.collection('reviews').add(formData);
+                    
+                    console.log('✅ Review saved to Firebase with ID:', docRef.id);
+                    console.log('Review data:', formData);
+
+                    // Wait a moment for Firebase to update
+                    await new Promise(resolve => setTimeout(resolve, 500));
+
+                    // Reload reviews to show the new one immediately
+                    console.log('🔄 Reloading reviews...');
+                    await app.loadReviews();
+
+                    // Show success message
+                    reviewForm.classList.add('hidden');
+                    successMsg.classList.remove('hidden');
+                    
+                    console.log('✨ Review submission complete!');
+
+                    // Reset form after 10 seconds
+                    setTimeout(() => {
+                        reviewForm.reset();
+                        selectedRating = 0;
+                        ratingInput.value = '';
+                        charCount.textContent = '0';
+                        starBtns.forEach(star => {
+                            star.querySelector('.star-icon').style.color = '#4B5563';
+                            star.classList.remove('scale-110');
+                        });
+                        reviewForm.classList.remove('hidden');
+                        successMsg.classList.add('hidden');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/></svg><span>Submit Review</span>';
+                    }, 10000);
+
+                } catch (error) {
+                    console.error('Error submitting review:', error);
+                    
+                    // Show user-friendly error message
+                    let errorMsg = 'Failed to submit review. Please try again.';
+                    if (error.code === 'permission-denied') {
+                        errorMsg = 'Please check Firebase security rules. See BACKEND_SETUP.md for help.';
+                    }
+                    
+                    alert(errorMsg);
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z"/></svg><span>Submit Review</span>';
+                }
+            });
         });
     </script>
 </body>

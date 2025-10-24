@@ -404,38 +404,38 @@
         // Data for dynamic content generation
         const contentData = {
             specials: [
-                { id: 'kebab', nameKey: 'kebab_platter', img: 'Shahi+Kebab' },
-                { id: 'samosa', nameKey: 'spicy_samosa', img: 'Crispy+Samosa' },
-                { id: 'thali', nameKey: 'special_thali', img: 'Royal+Thali' },
-                { id: 'lassi', nameKey: 'mango_lassi', img: 'Mango+Lassi' },
-                { id: 'gulab', nameKey: 'gulab_jamun', img: 'Gulab+Jamun' },
+                { id: 'kebab', nameKey: 'kebab_platter', img: './img/samosa.jpg' },
+                { id: 'samosa', nameKey: 'spicy_samosa', img: './img/samosa.jpg' },
+                { id: 'thali', nameKey: 'special_thali', img: './img/masla dosha.jpg' },
+                { id: 'lassi', nameKey: 'mango_lassi', img: './img/aamrash.jpg' },
+                { id: 'gulab', nameKey: 'gulab_jamun', img: './img/gulab jamun.jpg' },
             ],
             occasions: [
-                { id: 'wedding', nameKey: 'wedding_name', img: 'Wedding+Feast' },
-                { id: 'ceremony', nameKey: 'ceremony_name', img: 'Ring+Ceremony' },
-                { id: 'birthday', nameKey: 'birthday_name', img: 'Birthday+Party' },
-                { id: 'gettogether', nameKey: 'gettogether_name', img: 'Family+Party' },
-                { id: 'haldi', nameKey: 'haldi_name', img: 'Haldi+Function' },
-                { id: 'reception', nameKey: 'reception_name', img: 'Grand+Reception' },
+                { id: 'wedding', nameKey: 'wedding_name', img: './img/weeding special.jpg' },
+                { id: 'ceremony', nameKey: 'ceremony_name', img: './img/cermony.jpg' },
+                { id: 'birthday', nameKey: 'birthday_name', img: './img/birthday party.jpg' },
+                { id: 'gettogether', nameKey: 'gettogether_name', img: './img/familygettogether.jpg' },
+                { id: 'haldi', nameKey: 'haldi_name', img: './img/hardi special.jpg' },
+                { id: 'reception', nameKey: 'reception_name', img: './img/recption special.jpg' },
             ],
             recommendations: [
-                { id: 'soup', nameKey: 'manchow_soup', img: 'Hot+Soup' },
-                { id: 'kheer', nameKey: 'rice_kheer', img: 'Sweet+Kheer' },
-                { id: 'pakora', nameKey: 'mix_veg_pakora', img: 'Crispy+Pakora' },
-                { id: 'dosa', nameKey: 'masala_dosa', img: 'Masala+Dosa' },
-                { id: 'icecream', nameKey: 'kesar_pista', img: 'Kesar+IceCream' },
+                { id: 'soup', nameKey: 'manchow_soup', img: './img/veg pakoda.jpg' },
+                { id: 'kheer', nameKey: 'rice_kheer', img: './img/gajar halwa.jpg' },
+                { id: 'pakora', nameKey: 'mix_veg_pakora', img: './img/veg pakoda.jpg' },
+                { id: 'dosa', nameKey: 'masala_dosa', img: './img/masla dosha.jpg' },
+                { id: 'icecream', nameKey: 'kesar_pista', img: './img/shrikhand.jpg' },
             ],
             dishes: [
-                { name: 'Paneer Tikka', img: 'Paneer+Tikka' },
-                { name: 'Veg Biryani', img: 'Veg+Biryani' },
-                { name: 'Chole Bhature', img: 'Chole+Bhature' },
-                { name: 'Malai Kofta', img: 'Malai+Kofta' },
-                { name: 'Dal Makhani', img: 'Dal+Makhani' },
-                { name: 'Jalebi', img: 'Hot+Jalebi' },
-                { name: 'Veg Pulao', img: 'Veg+Pulao' },
-                { name: 'Butter Naan', img: 'Butter+Naan' },
-                { name: 'Rasgulla', img: 'Rasgulla' },
-                { name: 'Boondi Raita', img: 'Boondi+Raita' }
+                { name: 'Paneer Tikka', img: './img/paneer butter masala.jpg' },
+                { name: 'Veg Biryani', img: './img/veg-pulao-featured.jpg' },
+                { name: 'Chole Bhature', img: './img/chana masala.jpg' },
+                { name: 'Malai Kofta', img: './img/mix veg.jpg' },
+                { name: 'Dal Makhani', img: './img/dal khichede.jpg' },
+                { name: 'Jalebi', img: './img/jalebi.jpg' },
+                { name: 'Veg Pulao', img: './img/veg-pulao-featured.jpg' },
+                { name: 'Butter Naan', img: './img/wheat poli.jpg' },
+                { name: 'Rasgulla', img: './img/rasegulla.jpg' },
+                { name: 'Boondi Raita', img: './img/onion raita.jpg' }
             ],
             reviews: [
                 { quoteKey: 'review_quote_1', authorKey: 'review_author_name_1', roleKey: 'review_author_designation_1' },
@@ -540,6 +540,7 @@
         };
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Image mapping function
             const app = {
                 currentLang: 'en',
                 
@@ -565,7 +566,7 @@
                         <a href="#" class="relative flex-shrink-0 w-28 text-center group special-item filterable-item" data-item-id="${item.id}">
                             <div class="relative w-24 h-24 mx-auto">
                                 <div class="w-full h-full rounded-full plate-effect">
-                                    <img src="https://placehold.co/96x96/2d1b0c/ffebd1?text=${item.img}&font=poppins" alt="${item.nameKey}" class="w-full h-full rounded-full object-cover">
+                                    <img src="${item.img}" alt="${item.nameKey}" class="w-full h-full rounded-full object-cover">
                                 </div>
                             </div>
                             <span class="text-white/80 text-sm mt-3 block group-hover:text-white transition-colors" data-translate-key="${item.nameKey}">${translations[this.currentLang][item.nameKey]}</span>
@@ -576,7 +577,7 @@
                             <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
                                 <div class="relative w-28 h-28">
                                     <div class="thali-border w-full h-full rounded-full">
-                                        <img src="https://placehold.co/128x128/2d1b0c/ffebd1?text=${item.img}&font=poppins" alt="${item.nameKey}" class="w-full h-full object-cover rounded-full">
+                                        <img src="${item.img}" alt="${item.nameKey}" class="w-full h-full object-cover rounded-full">
                                     </div>
                                 </div>
                             </div>
@@ -591,7 +592,7 @@
                         <a href="#" class="relative text-center group filterable-item">
                             <div class="relative w-full aspect-square mx-auto">
                                 <div class="w-full h-full rounded-full plate-effect">
-                                    <img src="https://placehold.co/96x96/2d1b0c/ffebd1?text=${item.img.replace(' ','+')}&font=poppins" alt="${item.name}" class="w-full h-full rounded-full object-cover">
+                                    <img src="${item.img}" alt="${item.name}" class="w-full h-full rounded-full object-cover">
                                 </div>
                             </div>
                             <span class="text-white/80 text-xs mt-2 block group-hover:text-white transition-colors">${item.name}</span>
