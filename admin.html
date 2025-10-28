@@ -597,14 +597,6 @@
             submitBtn.disabled = true;
             submitBtn.textContent = 'Logging in...';
 
-            // Set a timeout to reset button if login takes too long
-            const resetTimeout = setTimeout(() => {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Login';
-                errorMsg.textContent = 'Login timeout. Please try again.';
-                errorMsg.classList.remove('hidden');
-            }, 15000);
-
             try {
                 // Sign in with Supabase Auth using email (username as email)
                 const email = username.includes('@') ? username : `${username}@sarvadnyacaterers.local`;
@@ -614,37 +606,18 @@
                     password: password
                 });
 
-                // Clear the timeout since we got a response
-                clearTimeout(resetTimeout);
-
                 if (error) {
                     throw error;
                 }
 
                 errorMsg.classList.add('hidden');
-                
-                // Check auth and show admin panel
                 await checkAuth();
-                
             } catch (error) {
-                // Clear the timeout
-                clearTimeout(resetTimeout);
-                
                 console.error('Login error:', error);
-                
-                // Better error messages
-                let errorMessage = 'Invalid credentials. Please try again.';
-                if (error.message && error.message.includes('Invalid')) {
-                    errorMessage = 'Invalid username or password.';
-                } else if (error.message) {
-                    errorMessage = error.message;
-                }
-                
-                errorMsg.textContent = errorMessage;
+                errorMsg.textContent = error.message || 'Invalid credentials. Please try again.';
                 errorMsg.classList.remove('hidden');
                 document.getElementById('password').value = '';
             } finally {
-                // Always reset button
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Login';
             }
@@ -724,51 +697,26 @@
                 const noPrintElements = document.querySelectorAll('.no-print');
                 noPrintElements.forEach(el => el.style.display = 'none');
 
-                // Use html2canvas to capture the receipt with higher quality
+                // Use html2canvas to capture the receipt
                 const canvas = await html2canvas(receiptElement, {
-                    scale: 3, // Increased scale for better quality on mobile
+                    scale: 2,
                     useCORS: true,
                     logging: false,
-                    backgroundColor: '#ffffff',
-                    windowWidth: receiptElement.scrollWidth,
-                    windowHeight: receiptElement.scrollHeight
+                    backgroundColor: '#ffffff'
                 });
 
                 // Restore no-print elements
                 noPrintElements.forEach(el => el.style.display = '');
 
-                // Create PDF with jsPDF - optimized for mobile viewing
+                // Create PDF with jsPDF
                 const { jsPDF } = window.jspdf;
                 const imgWidth = 210; // A4 width in mm
-                const pageHeight = 297; // A4 height in mm
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
-                
-                // Calculate if we need multiple pages
-                let heightLeft = imgHeight;
-                let position = 0;
 
-                const pdf = new jsPDF('p', 'mm', 'a4', true); // Added compression
-                const imgData = canvas.toDataURL('image/jpeg', 0.95); // Use JPEG with 95% quality for smaller file size
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgData = canvas.toDataURL('image/png');
 
-                // Add first page
-                pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
-                heightLeft -= pageHeight;
-
-                // Add additional pages if needed
-                while (heightLeft > 0) {
-                    position = heightLeft - imgHeight;
-                    pdf.addPage();
-                    pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
-                    heightLeft -= pageHeight;
-                }
-
-                // Set PDF metadata for better mobile compatibility
-                pdf.setProperties({
-                    title: `Receipt ${currentReceiptData.receiptNo}`,
-                    subject: 'Receipt',
-                    author: 'Sarvadnya Caterers',
-                    creator: 'Sarvadnya Caterers Admin System'
-                });
+                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
 
                 // Convert PDF to blob
                 const pdfBlob = pdf.output('blob');
