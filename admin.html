@@ -598,26 +598,55 @@
             submitBtn.textContent = 'Logging in...';
 
             try {
+                // Add timeout to prevent infinite loading
+                const timeoutPromise = new Promise((_, reject) => 
+                    setTimeout(() => reject(new Error('Login timeout. Please check your internet connection.')), 15000)
+                );
+
                 // Sign in with Supabase Auth using email (username as email)
                 const email = username.includes('@') ? username : `${username}@sarvadnyacaterers.local`;
                 
-                const { data, error } = await supabase.auth.signInWithPassword({
+                const loginPromise = supabase.auth.signInWithPassword({
                     email: email,
                     password: password
                 });
+
+                // Race between login and timeout
+                const { data, error } = await Promise.race([loginPromise, timeoutPromise]);
 
                 if (error) {
                     throw error;
                 }
 
                 errorMsg.classList.add('hidden');
+                
+                // Check auth and show admin panel
                 await checkAuth();
+                
+                // Small delay to ensure UI updates
+                setTimeout(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Login';
+                }, 500);
+                
             } catch (error) {
                 console.error('Login error:', error);
-                errorMsg.textContent = error.message || 'Invalid credentials. Please try again.';
+                
+                // Better error messages
+                let errorMessage = 'Invalid credentials. Please try again.';
+                if (error.message.includes('timeout')) {
+                    errorMessage = 'Connection timeout. Please check your internet and try again.';
+                } else if (error.message.includes('network')) {
+                    errorMessage = 'Network error. Please check your connection.';
+                } else if (error.message) {
+                    errorMessage = error.message;
+                }
+                
+                errorMsg.textContent = errorMessage;
                 errorMsg.classList.remove('hidden');
                 document.getElementById('password').value = '';
-            } finally {
+                
+                // Re-enable button
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Login';
             }
