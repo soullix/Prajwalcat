@@ -738,14 +738,6 @@
                 loadingMsg.innerHTML = '<div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div><span>Saving receipt and generating PDF...</span>';
                 document.body.appendChild(loadingMsg);
 
-                // Save customer to database
-                await saveCustomer(
-                    currentReceiptData.customerName,
-                    currentReceiptData.customerPhone,
-                    currentReceiptData.venueAddress,
-                    currentReceiptData.venueType
-                );
-
                 // Generate PDF
                 const pdfBlob = await generatePDF();
                 let pdfURL = null;
@@ -817,6 +809,14 @@
                 } else {
                     // Save new receipt
                     receiptData.created_at = new Date().toISOString();
+
+                    // Save customer to database (only for new receipts to increment total_bookings)
+                    await saveCustomer(
+                        currentReceiptData.customerName,
+                        currentReceiptData.customerPhone,
+                        currentReceiptData.venueAddress,
+                        currentReceiptData.venueType
+                    );
 
                     const { data, error } = await supabase
                         .from('receipts')
