@@ -553,12 +553,32 @@
 
         // Check if user is logged in using Supabase Auth
         async function checkAuth() {
-            const { data: { session }, error } = await supabase.auth.getSession();
-            
-            if (session && !error) {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('admin-panel').classList.remove('hidden');
-            } else {
+            try {
+                // Force refresh session to ensure we have latest auth state
+                const { data: { session }, error } = await supabase.auth.getSession();
+                
+                if (session && !error) {
+                    // User is authenticated
+                    document.getElementById('login-screen').classList.add('hidden');
+                    document.getElementById('admin-panel').classList.remove('hidden');
+                } else {
+                    // User is not authenticated - show login screen
+                    document.getElementById('login-screen').classList.remove('hidden');
+                    document.getElementById('admin-panel').classList.add('hidden');
+                    // Clear any form data
+                    const loginForm = document.getElementById('login-form');
+                    if (loginForm) {
+                        loginForm.reset();
+                    }
+                    // Clear error message
+                    const errorMsg = document.getElementById('error-message');
+                    if (errorMsg) {
+                        errorMsg.classList.add('hidden');
+                    }
+                }
+            } catch (error) {
+                console.error('Auth check error:', error);
+                // On error, show login screen
                 document.getElementById('login-screen').classList.remove('hidden');
                 document.getElementById('admin-panel').classList.add('hidden');
             }
@@ -606,9 +626,17 @@
         // Logout function with Supabase Auth
         async function logout() {
             try {
+                // Sign out from Supabase - this clears the session
                 await supabase.auth.signOut();
-                await checkAuth();
-                document.getElementById('login-form').reset();
+                
+                // Clear any local storage items
+                localStorage.removeItem('supabase.auth.token');
+                
+                // Force clear session storage
+                sessionStorage.clear();
+                
+                // Redirect to main website immediately with cache bust
+                window.location.href = 'index.html?logout=1';
             } catch (error) {
                 console.error('Logout error:', error);
                 alert('Error logging out. Please try again.');
@@ -757,6 +785,25 @@
 
                     if (uploadError) {
                         console.error('PDF upload error:', uploadError);
+                        document.body.removeChild(loadingMsg);
+                        
+                        // Show error message with retry option
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 max-w-md';
+                        errorMsg.innerHTML = `
+                            <div class="font-bold mb-2">⚠️ PDF Upload Failed</div>
+                            <div class="text-sm mb-3">${uploadError.message || 'Unable to upload PDF to cloud storage'}</div>
+                            <div class="text-xs">Receipt cannot be saved without PDF. Please try again.</div>
+                        `;
+                        document.body.appendChild(errorMsg);
+                        setTimeout(() => {
+                            if (document.body.contains(errorMsg)) {
+                                document.body.removeChild(errorMsg);
+                            }
+                        }, 5000);
+                        
+                        // Stop the save flow - do not save receipt without PDF
+                        return;
                     } else {
                         // Get public URL
                         const { data: urlData } = supabase.storage
@@ -968,17 +1015,17 @@
                                         </div>
                                     </div>
                                     <div class="flex gap-2 mt-3 flex-wrap">
-                                        <button onclick="viewReceipt('${receipt.id}')"
-                                            class="flex-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm">
+                                        <button data-action="view" data-receipt-id="${receipt.id}"
+                                            class="receipt-action-btn flex-1 bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 transition-colors text-sm">
                                             👁️ View
                                         </button>
                                         ${hasPDF ? `<a href="${receipt.pdf_url}" target="_blank" class="flex-1 bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm text-center">📥 PDF</a>` : ''}
-                                        <button onclick="loadReceiptForEdit('${receipt.id}')"
-                                            class="flex-1 bg-yellow-500 text-white px-3 py-2 rounded-lg hover:bg-yellow-600 transition-colors text-sm">
+                                        <button data-action="edit" data-receipt-id="${receipt.id}"
+                                            class="receipt-action-btn flex-1 bg-yellow-500 text-white px-3 py-2 rounded-lg hover:bg-yellow-600 transition-colors text-sm">
                                             ✏️ Edit
                                         </button>
-                                        <button onclick="deleteReceipt('${receipt.id}', '${receipt.pdf_url || ''}')"
-                                            class="flex-1 bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm">
+                                        <button data-action="delete" data-receipt-id="${receipt.id}" data-pdf-url="${receipt.pdf_url || ''}"
+                                            class="receipt-action-btn flex-1 bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-colors text-sm">
                                             🗑️ Delete
                                         </button>
                                     </div>
@@ -994,6 +1041,24 @@
                 receiptsList.innerHTML = '<p class="text-center text-red-500 py-8">Error loading receipts</p>';
             }
         }
+
+        // Delegated event listener for receipt action buttons
+        document.addEventListener('click', function(e) {
+            const button = e.target.closest('.receipt-action-btn');
+            if (!button) return;
+
+            const action = button.dataset.action;
+            const receiptId = button.dataset.receiptId;
+            const pdfUrl = button.dataset.pdfUrl;
+
+            if (action === 'view' && receiptId) {
+                viewReceipt(receiptId);
+            } else if (action === 'edit' && receiptId) {
+                loadReceiptForEdit(receiptId);
+            } else if (action === 'delete' && receiptId) {
+                deleteReceipt(receiptId, pdfUrl);
+            }
+        });
 
         // Apply filters
         function applyFilters() {
@@ -1056,9 +1121,21 @@
                         const confirmed = confirm(`Are you sure you want to restore ${receipts.length} receipts? This will not delete existing receipts.`);
                         if (!confirmed) return;
 
-                        for (const receipt of receipts) {
-                            delete receipt.id; // Remove ID to create new entries
-                            await supabase.from('receipts').insert(receipt);
+                        // Remove IDs from all receipts to create new entries
+                        const receiptsToInsert = receipts.map(receipt => {
+                            const { id, ...receiptWithoutId } = receipt;
+                            return receiptWithoutId;
+                        });
+
+                        // Perform atomic batch insert (all or nothing)
+                        const { data, error: insertError } = await supabase
+                            .from('receipts')
+                            .insert(receiptsToInsert);
+
+                        if (insertError) {
+                            console.error('Error inserting receipts:', insertError);
+                            alert(`❌ Error restoring receipts: ${insertError.message}`);
+                            return;
                         }
 
                         alert('✅ Receipts restored successfully!');
@@ -1335,43 +1412,11 @@
 
                 if (updateError) {
                     console.error('Error incrementing sequence:', updateError);
-                    // Fallback to random number with fixed Math.random()
-                    const date = new Date();
-                    const year = date.getFullYear().toString().substr(-2);
-                    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                    const random = Math.floor(Math.random() * 9000) + 1000; // Fixed: proper random 1000-9999
-                    return `SC${year}${month}${random}`;
+                    throw new Error('Failed to generate receipt number. Please ensure the increment_receipt_sequence RPC function is installed in your database.');
                 }
 
-                // If RPC doesn't exist, fall back to traditional method with better handling
                 if (!sequence) {
-                    const { data: seq, error: fetchError } = await supabase
-                        .from('receipt_sequence')
-                        .select('*')
-                        .eq('id', 1)
-                        .single();
-
-                    if (fetchError) {
-                        const date = new Date();
-                        const year = date.getFullYear().toString().substr(-2);
-                        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                        const random = Math.floor(Math.random() * 9000) + 1000; // Fixed: proper random 1000-9999
-                        return `SC${year}${month}${random}`;
-                    }
-
-                    const nextNumber = seq.current_number + 1;
-                    const receiptNo = `${seq.prefix}${String(nextNumber).padStart(6, '0')}`;
-
-                    // Update sequence (still has race condition but better than before)
-                    await supabase
-                        .from('receipt_sequence')
-                        .update({ 
-                            current_number: nextNumber,
-                            updated_at: new Date().toISOString()
-                        })
-                        .eq('id', 1);
-
-                    return receiptNo;
+                    throw new Error('Receipt sequence not initialized. Please check your database setup.');
                 }
 
                 // Use the atomically incremented number from RPC
@@ -1379,12 +1424,9 @@
                 return receiptNo;
             } catch (error) {
                 console.error('Error in generateReceiptNo:', error);
-                // Fallback with fixed Math.random()
-                const date = new Date();
-                const year = date.getFullYear().toString().substr(-2);
-                const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                const random = Math.floor(Math.random() * 9000) + 1000; // Fixed: proper random 1000-9999
-                return `SC${year}${month}${random}`;
+                // Show user-friendly error
+                alert('❌ Error generating receipt number. Please check your database setup and ensure the increment_receipt_sequence RPC function exists.');
+                throw error; // Re-throw to prevent receipt creation
             }
         }
 
@@ -1447,11 +1489,23 @@
             filtered.forEach(customer => {
                 const item = document.createElement('div');
                 item.className = 'px-4 py-3 hover:bg-purple-50 cursor-pointer border-b border-gray-100 transition-colors';
-                item.innerHTML = `
-                    <div class="font-semibold text-gray-800">${customer.name}</div>
-                    <div class="text-sm text-gray-600">📞 ${customer.phone}</div>
-                    <div class="text-xs text-purple-600">📍 ${customer.address || 'No address'} | 📅 ${customer.total_bookings} booking(s)</div>
-                `;
+                
+                // Create child elements and set textContent to prevent XSS
+                const nameDiv = document.createElement('div');
+                nameDiv.className = 'font-semibold text-gray-800';
+                nameDiv.textContent = customer.name;
+                
+                const phoneDiv = document.createElement('div');
+                phoneDiv.className = 'text-sm text-gray-600';
+                phoneDiv.textContent = `📞 ${customer.phone}`;
+                
+                const detailsDiv = document.createElement('div');
+                detailsDiv.className = 'text-xs text-purple-600';
+                detailsDiv.textContent = `📍 ${customer.address || 'No address'} | 📅 ${customer.total_bookings} booking(s)`;
+                
+                item.appendChild(nameDiv);
+                item.appendChild(phoneDiv);
+                item.appendChild(detailsDiv);
                 item.onclick = () => selectCustomer(customer);
                 dropdown.appendChild(item);
             });
@@ -1483,8 +1537,13 @@
         document.addEventListener('click', function(e) {
             const dropdown = document.getElementById('customer-dropdown');
             const input = document.getElementById('customer-name');
-            if (e.target !== input && e.target !== dropdown) {
-                dropdown.classList.add('hidden');
+            
+            // Null-check before calling contains
+            if (dropdown && input) {
+                // Check if click is outside both elements using contains()
+                if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.add('hidden');
+                }
             }
         });
 
