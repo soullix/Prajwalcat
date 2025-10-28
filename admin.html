@@ -697,26 +697,51 @@
                 const noPrintElements = document.querySelectorAll('.no-print');
                 noPrintElements.forEach(el => el.style.display = 'none');
 
-                // Use html2canvas to capture the receipt
+                // Use html2canvas to capture the receipt with higher quality
                 const canvas = await html2canvas(receiptElement, {
-                    scale: 2,
+                    scale: 3, // Increased scale for better quality on mobile
                     useCORS: true,
                     logging: false,
-                    backgroundColor: '#ffffff'
+                    backgroundColor: '#ffffff',
+                    windowWidth: receiptElement.scrollWidth,
+                    windowHeight: receiptElement.scrollHeight
                 });
 
                 // Restore no-print elements
                 noPrintElements.forEach(el => el.style.display = '');
 
-                // Create PDF with jsPDF
+                // Create PDF with jsPDF - optimized for mobile viewing
                 const { jsPDF } = window.jspdf;
                 const imgWidth = 210; // A4 width in mm
+                const pageHeight = 297; // A4 height in mm
                 const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                // Calculate if we need multiple pages
+                let heightLeft = imgHeight;
+                let position = 0;
 
-                const pdf = new jsPDF('p', 'mm', 'a4');
-                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4', true); // Added compression
+                const imgData = canvas.toDataURL('image/jpeg', 0.95); // Use JPEG with 95% quality for smaller file size
 
-                pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+                // Add first page
+                pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
+                heightLeft -= pageHeight;
+
+                // Add additional pages if needed
+                while (heightLeft > 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight, undefined, 'FAST');
+                    heightLeft -= pageHeight;
+                }
+
+                // Set PDF metadata for better mobile compatibility
+                pdf.setProperties({
+                    title: `Receipt ${currentReceiptData.receiptNo}`,
+                    subject: 'Receipt',
+                    author: 'Sarvadnya Caterers',
+                    creator: 'Sarvadnya Caterers Admin System'
+                });
 
                 // Convert PDF to blob
                 const pdfBlob = pdf.output('blob');
