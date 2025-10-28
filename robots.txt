@@ -1,9 +1,0 @@
-# Robots.txt for Sarvadnya Caterers Website
-User-agent: *
-Allow: /
-Disallow: /admin.html
-Disallow: /admin_backup.html
-Disallow: /admin/
-
-# Sitemap location
-Sitemap: https://sarvadnyacaterers.com/sitemap.xml
